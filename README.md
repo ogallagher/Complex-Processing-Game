@@ -24,11 +24,12 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Server: enemies
 - [ ] Server: projectiles
 - [ ] Server: communication, notices
-- [ ] Client: Read in environment
-- [ ] Client: Store environment
-- [ ] Client: Update environment when far enough from last update point
-- [ ] Client: Read in other players
-- [ ] Client: Send self data (location, name, color)
-- [ ] Client: Read in enemies
+- [ ] Client: read in environment
+- [ ] Client: store environment
+- [ ] Client: update environment when far enough from last update point
+- [ ] Client: read in other players
+- [ ] Client: send self data (location, name, color)
+- [ ] Client: read in enemies
 - [ ] Server: create AI for enemies, so they move around obstacles
 - [ ] Client: ¿Sound effects... how much will this slow the game down, and is it worth the effort?
+- [ ] Client: aiming and shooting
