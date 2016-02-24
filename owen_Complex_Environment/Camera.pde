@@ -9,7 +9,7 @@ class Camera {
   int upDirection;
   boolean orienting;
   int selfWidth;
-  int touchingWall;
+  IntList touchingWall;
   
   Camera() {
     location = new PVector(width/2, height/2, (-1*blockWidth*cubicleWidth*complexWidth*0.5) + (blockWidth*cubicleWidth*0.5));
@@ -23,7 +23,7 @@ class Camera {
     upDirection = 0;
     orienting = false;
     selfWidth = blockWidth - 30;
-    touchingWall = 0;
+    touchingWall = new IntList();
   }
   
   void orient() {
@@ -257,49 +257,26 @@ class Camera {
       if (key == 'o') {
         upDirection = 5;
       }
-      if (key == ' ' && upDirection == 0) {
-        velocity.y = -1 * speed * 10;
-      }
-    /*if (keyCode == UP) {
-        if (upDirection == 0) {
-          velocity.y -= speed;
+      if (key == ' ') {
+        if (upDirection == 0 && touchingWall.hasValue(2)) {
+          velocity.y = -1 * speed * 10;
         }
-        else if (upDirection == 1) {
-          velocity.x -= speed;
+        else if (upDirection == 1 && touchingWall.hasValue(1)) {
+          velocity.x = -1 * speed * 10;
         }
-        else if (upDirection == 2) {
-          velocity.y += speed;
+        else if (upDirection == 2 && touchingWall.hasValue(4)) {
+          velocity.y = speed * 10;
         }
-        else if (upDirection == 3) {
-          velocity.x += speed;
+        else if (upDirection == 3 && touchingWall.hasValue(3)) {
+          velocity.x = speed * 10;
         }
-        else if (upDirection == 4) {
-          velocity.z -= speed;
+        else if (upDirection == 4 && touchingWall.hasValue(5)) {
+          velocity.z = -1 * speed * 10;
         }
-        else if (upDirection == 5) {
-          velocity.z += speed;
+        else if (upDirection == 5 && touchingWall.hasValue(6)) {
+          velocity.z = speed * 10;
         }
       }
-      if (keyCode == DOWN) {
-        if (upDirection == 0) {
-          velocity.y += speed;
-        }
-        else if (upDirection == 1) {
-          velocity.x += speed;
-        }
-        else if (upDirection == 2) {
-          velocity.y -= speed;
-        }
-        else if (upDirection == 3) {
-          velocity.x -= speed;
-        }
-        else if (upDirection == 4) {
-          velocity.z += speed;
-        }
-        else if (upDirection == 5) {
-          velocity.z -= speed;
-        }
-      }*/
     }
   }
   
@@ -351,15 +328,7 @@ class Camera {
       velocity.z *= drag;
     }
     
-    if ((touchingWall == 1 && velocity.x > 0) || (touchingWall == 3 && velocity.x < 0)) {
-      velocity.x = 0;
-    }
-    if ((touchingWall == 2 && velocity.y > 0) || (touchingWall == 4 && velocity.y < 0)) {
-      velocity.y = 0;
-    }
-    if ((touchingWall == 5 && velocity.z > 0) || (touchingWall == 6 && velocity.z < 0)) {
-      velocity.z = 0;
-    }
+    println("touch: " + touchingWall);
     
     location.add(velocity);
     target.add(velocity);

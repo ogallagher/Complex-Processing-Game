@@ -37,12 +37,12 @@ class Block {
         if (difference.x > 0) {
           camera.location.x += dx;
           camera.target.x += dx;
-          camera.touchingWall = 3;
+          camera.touchingWall.append(3);
         }
         else {
           camera.location.x -= dx;
           camera.target.x -= dx;
-          camera.touchingWall = 1;
+          camera.touchingWall.append(1);
         }
       }
       else if (dy < dx && dy < dz) {
@@ -52,12 +52,12 @@ class Block {
         if (difference.y > 0) {
           camera.location.y += dy;
           camera.target.y += dy;
-          camera.touchingWall = 4;
+          camera.touchingWall.append(4);
         }
         else {
           camera.location.y -= dy;
           camera.target.y -= dy;
-          camera.touchingWall = 2;
+          camera.touchingWall.append(2);
         }
       }
       else {
@@ -67,17 +67,14 @@ class Block {
         if (difference.z > 0) {
           camera.location.z += dz;
           camera.target.z += dz;
-          camera.touchingWall = 6;
+          camera.touchingWall.append(6);
         }
         else {
           camera.location.z -= dz;
           camera.target.z -= dz;
-          camera.touchingWall = 5;
+          camera.touchingWall.append(5);
         }
       }
-    }
-    else {
-      camera.touchingWall = 0;
     }
   }
 }

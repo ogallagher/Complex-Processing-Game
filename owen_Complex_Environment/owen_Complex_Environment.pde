@@ -69,5 +69,6 @@ void draw() {
   camera.fall();
   camera.move();
   camera.drawSights();
+  camera.touchingWall.clear();
   time += 0.01;
 }
