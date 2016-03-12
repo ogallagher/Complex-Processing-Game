@@ -3,17 +3,31 @@ void listen() {
     String text = client.readString();
     //println("Incoming: " + text);
     
-    String requestText = extractString(text,requestHD,endHD);
+    String requestText = extractString(text,requestHD,endHD);                //Eventually, this will have to take multiple requested blockNumbers
     
     if (requestText.indexOf(nameID + "ENV" + endID) > -1) {
-      sendEnvironment();
-      println("SENDING ENVIRONMENT");
+      int blockNumber = int(extractString(requestText,locationID,endID));
+      sendEnvironment(blockNumber);
+      println("REQUESTED: " + blockNumber);
     }
   }
 }
 
-void sendEnvironment() {  
-  broadcast(blockHD + environment.substring(0,100) + endHD);
+void sendEnvironment(int requested) {
+  if (requested == -1) {
+    broadcast(blockHD + descriptionID + str(blockWidth) + ',' + str(cubicleWidth) + ',' + str(complexWidth) + ',' + str(environment.size()) + endID + endHD);
+  }
+  else {
+    String broadcast = blockHD;
+    
+    for (int i=requested; i<requested+200 && i<environment.size(); i++) {
+      broadcast += nameID + str(i) + endID + environment.get(i);
+    }
+    
+    broadcast += endHD;
+    
+    broadcast(broadcast);
+  }
 }
 
 void broadcast(String text) {

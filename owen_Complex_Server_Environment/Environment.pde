@@ -96,10 +96,10 @@ void recordEnvironment() {
         for (int blo=0; blo<cubicles.get(cub).faces.get(fac).features.get(fea).blocks.size(); blo++) {
           Block block = cubicles.get(cub).faces.get(fac).features.get(fea).blocks.get(blo);
           
-          String location = locationID + str(int(block.location.x)) + ',' + str(int(block.location.y)) + ',' + str(int(block.location.z)) + endID;
-          String dimensions = dimensionsID + str(int(block.dimensions.x)) + ',' + str(int(block.dimensions.y)) + ',' + str(int(block.dimensions.z)) + endID;
+          String location = locationID + str(int(block.location.x / blockWidth)) + ',' + str(int(block.location.y / blockWidth)) + ',' + str(int(block.location.z / blockWidth)) + endID;
+          String dimensions = dimensionsID + str(int(block.dimensions.x / blockWidth)) + ',' + str(int(block.dimensions.y / blockWidth)) + ',' + str(int(block.dimensions.z / blockWidth)) + endID;
           
-          environment += location + dimensions;
+          environment.append(location + dimensions);
         }
       }
     }

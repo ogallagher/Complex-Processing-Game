@@ -7,7 +7,7 @@ void listen() {                                                      //NOTE: the
     String requestText = extractString(text,requestHD,endHD);
     println("REQUEST: " + requestText);
     String blockText = extractString(text,blockHD,endHD);
-    println("BLOCKS: " + blockText.length());
+    println("BLOCKDATA: " + blockText.length());
     
     broadcast(requestHD + requestText + endHD);
     broadcast(blockHD + blockText + endHD);

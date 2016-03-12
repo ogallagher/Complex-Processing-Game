@@ -1,10 +1,5 @@
 //owen_Complex_Client
 
-//PROBLEM: When sending the environment, not everything gets through... try: 
-//                  sending in smaller packets, 
-//                  consolidating dimensions, 
-//                  only asking until environment is received (#blocks == blocks.size())
-
 import processing.net.*;
 import processing.sound.*;
 import java.awt.*;
@@ -29,12 +24,14 @@ String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
 String colorID = "/";
+String descriptionID = "|";
 String endID = "?";
 
-ArrayList<Cubicle> cubicles = new ArrayList<Cubicle>();
-int complexWidth = 5;   //  cubicles (5)
-int cubicleWidth = 10;  //  blocks
-int blockWidth = 200;    //  pixels
+ArrayList<Block> blocks = new ArrayList<Block>();  // #|200,10,5,100?!  => blockWidth, cubicleWidth, complexWidth, blockMax
+int complexWidth = 5;    //cubicles
+int cubicleWidth = 10;   //blocks
+int blockWidth = 200;    //pixels
+int blockMax = 0;        //How to know when to stop asking for more blocks
 
 PGraphics en;
 
@@ -43,7 +40,7 @@ Camera camera;
 Robot override;
 SoundFile[] sounds;
 
-boolean gotEnvironment = false;
+int environmentStage = -1;
 
 void setup() {
   size(800,800,P2D);

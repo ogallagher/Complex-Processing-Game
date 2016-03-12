@@ -18,13 +18,13 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [x] Fix jumping
 - [x] Only display rooms within range N
 - [ ] ¿Compass that shows where "North" (positive direction along z-axis) is?
-- [ ] Server: environment
-- [ ] Server: communication
+- [x] Server: environment
+- [x] Server: communication
 - [ ] Server: players
 - [ ] Server: enemies
 - [ ] Server: projectiles
-- [ ] Client: read in environment
-- [ ] Client: store environment
+- [x] Client: read in environment
+- [x] Client: store environment
 - [ ] Client: update environment when far enough from last update point
 - [ ] Client: read in other players
 - [ ] Client: send self data (location, name, color)
@@ -32,3 +32,9 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Server: create AI for enemies, so they move around obstacles
 - [ ] Client: ¿Sound effects... how much will this slow the game down, and is it worth the effort?
 - [ ] Client: aiming and shooting
+- [x] Test single client environment transfer
+- [x] Debug single client environment transfer
+- [x] Client: request environment
+- [ ] Add color to environment transfer
+- [ ] Update environment server to take requests from multiple sources
+- [ ] Update central server to perform consolidation (put multiple broadcasts of the same heading type under a single heading)

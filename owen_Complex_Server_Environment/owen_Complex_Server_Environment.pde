@@ -22,9 +22,10 @@ String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
 String colorID = "/";
+String descriptionID = "|";
 String endID = "?";
 
-String environment = "";
+StringList environment = new StringList();
 ArrayList<Cubicle> cubicles = new ArrayList<Cubicle>();
 int complexWidth = 5;   //  cubicles (5)
 int cubicleWidth = 10;  //  blocks
