@@ -1,8 +1,30 @@
-// owen_Complex_Envorinment
+// owen_Complex_Server_Envorinment
 
 import processing.net.*;
 import java.awt.*;
 
+String serverAddress = "74.71.101.15";
+int port = 55555;
+
+//Headers
+String messageHD = "&";
+String requestHD = "$";
+String blockHD = "#";
+String playerHD = "@";
+String enemyHD = "*";
+String projectileHD = "^";
+String endHD = "!";
+
+//Identifiers
+String addressID = "≤";
+String nameID = "{";
+String locationID = "(";
+String velocityID = "<";
+String dimensionsID = "[";
+String colorID = "/";
+String endID = "?";
+
+String environment = "";
 ArrayList<Cubicle> cubicles = new ArrayList<Cubicle>();
 int complexWidth = 5;   //  cubicles (5)
 int cubicleWidth = 10;  //  blocks
@@ -10,6 +32,7 @@ int blockWidth = 200;    //  pixels
 
 PGraphics en;
 
+Client client;
 Camera camera;
 Robot override;
 
@@ -18,8 +41,11 @@ float time = 0;
 void setup() {
   size(800,800,P2D);
   
+  client = new Client(this, serverAddress, port);
+  
   loadEnvironment();
   compressEnvironment();
+  recordEnvironment();
   en = createGraphics(800,800,P3D);
   
   try {
@@ -35,7 +61,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  /*background(0);
   en.beginDraw();
   en.background(0);
   
@@ -70,5 +96,7 @@ void draw() {
   camera.move();
   camera.drawSights();
   camera.touchingWall.clear();
-  time += 0.01;
+  time += 0.01;*/
+  
+  listen();
 }

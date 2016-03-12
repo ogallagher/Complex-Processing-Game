@@ -20,6 +20,7 @@ String nameID = "{";
 String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
+String colorID = "/";
 String endID = "?";
 
 void setup() {

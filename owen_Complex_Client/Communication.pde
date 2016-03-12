@@ -31,7 +31,22 @@ void readMessages(String text) {
 }
 
 void readBlocks(String text) {
+  int start = -1;
   
+  while (text.indexOf(locationID,start) > -1) {
+    int end = text.indexOf(locationID,start) + 1;
+    String block;
+    
+    if (text.indexOf(locationID,end) < 0) {
+      block = text.substring(text.indexOf(locationID,start));
+    }
+    else {
+      block = text.substring(text.indexOf(locationID,start),text.indexOf(locationID,end));
+    }
+    println("BLOCK: " + block);
+    
+    start = text.indexOf(locationID,start) + block.length() + 2;
+  }
 }
 
 void readPlayers(String text) {
@@ -51,12 +66,14 @@ void sendData() {
 }
 
 void requestData() {
-  
+  if (!gotEnvironment) {
+    broadcast(requestHD + nameID + "ENV" + endID + endHD);
+  }
 }
 
 void broadcast(String text) {
   if (text.length() > 0) {
-    client.write(nameID + myAddress + endID + text);
+    client.write(addressID + myAddress + endID + text);
   }
 }
 

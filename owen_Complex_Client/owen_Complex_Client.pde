@@ -1,5 +1,10 @@
 //owen_Complex_Client
 
+//PROBLEM: When sending the environment, not everything gets through... try: 
+//                  sending in smaller packets, 
+//                  consolidating dimensions, 
+//                  only asking until environment is received (#blocks == blocks.size())
+
 import processing.net.*;
 import processing.sound.*;
 import java.awt.*;
@@ -23,6 +28,7 @@ String nameID = "{";
 String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
+String colorID = "/";
 String endID = "?";
 
 ArrayList<Cubicle> cubicles = new ArrayList<Cubicle>();
@@ -36,6 +42,8 @@ Client client;
 Camera camera;
 Robot override;
 SoundFile[] sounds;
+
+boolean gotEnvironment = false;
 
 void setup() {
   size(800,800,P2D);

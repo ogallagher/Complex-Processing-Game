@@ -1,8 +1,16 @@
-void listen() {
+void listen() {                                                      //NOTE: the central server will be getting multiple of each header, eventually. It then consolidates them before sending again.
   Client client = server.available();
   if (client != null) {
     String text = client.readString();
     String address = extractString(text,addressID,endID);
+    
+    String requestText = extractString(text,requestHD,endHD);
+    println("REQUEST: " + requestText);
+    String blockText = extractString(text,blockHD,endHD);
+    println("BLOCKS: " + blockText.length());
+    
+    broadcast(requestHD + requestText + endHD);
+    broadcast(blockHD + blockText + endHD);
   }
 }
 

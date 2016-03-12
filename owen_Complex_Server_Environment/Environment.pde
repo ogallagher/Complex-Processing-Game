@@ -88,3 +88,20 @@ void compressEnvironment() {
   
   println("Removed " + removed + " extraneous blocks.");
 }
+
+void recordEnvironment() {
+  for (int cub=0; cub<cubicles.size(); cub++) {
+    for (int fac=0; fac<cubicles.get(cub).faces.size(); fac++) {
+      for (int fea=0; fea<cubicles.get(cub).faces.get(fac).features.size(); fea++) {
+        for (int blo=0; blo<cubicles.get(cub).faces.get(fac).features.get(fea).blocks.size(); blo++) {
+          Block block = cubicles.get(cub).faces.get(fac).features.get(fea).blocks.get(blo);
+          
+          String location = locationID + str(int(block.location.x)) + ',' + str(int(block.location.y)) + ',' + str(int(block.location.z)) + endID;
+          String dimensions = dimensionsID + str(int(block.dimensions.x)) + ',' + str(int(block.dimensions.y)) + ',' + str(int(block.dimensions.z)) + endID;
+          
+          environment += location + dimensions;
+        }
+      }
+    }
+  }
+}
