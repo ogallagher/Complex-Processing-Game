@@ -23,7 +23,6 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Server: players
 - [ ] Server: enemies
 - [ ] Server: projectiles
-- [ ] Server: communication, notices
 - [ ] Client: read in environment
 - [ ] Client: store environment
 - [ ] Client: update environment when far enough from last update point
