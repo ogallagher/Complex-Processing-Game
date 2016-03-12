@@ -44,6 +44,7 @@ int environmentStage = -1;
 
 void setup() {
   size(800,800,P2D);
+  en = createGraphics(800,800,P3D);
   
   client = new Client(this, serverAddress, port);
   for (int i=0; i<5; i++) {
@@ -66,16 +67,51 @@ void setup() {
 
 void draw() {
   //TASKS:
-  //  Handle pre-connection action (sign-in, entry request)
+  //  Handle UI pre-connection (sign-in, entry request)
   //  Receive and interpret data
   //  Update lists of blocks, players, enemies, projectiles, announcements
-  //  Draw environment, players, enemies, projectiles, announcements
   //  Control player movement, reorientation, gravity, collision
+  //  Draw environment, players, enemies, projectiles, announcements
   //  Shoot projectiles
   //  Die
   //  Send new data
   //  Request new data
+  
+  if (environmentStage != 0) {
+    background(0);
+  }
+  
   listen();
+  
+  if (environmentStage > -1) {
+    camera.orient();
+    camera.look();
+    
+    en.beginDraw();
+    en.background(0);
+    camera.drawLamp();
+    displayComplexAndCollision();
+    displayGoal();
+    en.endDraw();
+    image(en,0,0);
+    
+    if (environmentStage == 1) {
+      camera.control();
+      camera.fall();
+      camera.move();
+      camera.drawSights();
+      camera.touchingWall.clear();
+    }
+    else {
+      pushMatrix();
+      fill(0,255,80);
+      noStroke();
+      rect(10, (height/2)-100, float(blocks.size()) / float(blockMax) * float(width-20), 200);
+      popMatrix();
+    }
+  }
+  
   sendData();
+  
   requestData();
 }

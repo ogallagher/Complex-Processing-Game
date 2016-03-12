@@ -5,6 +5,7 @@ class Camera {
   PVector target;
   PVector newTarget;
   PVector angularVelocity;
+  PVector orientation;
   float speed;
   int upDirection;
   boolean orienting;
@@ -18,6 +19,7 @@ class Camera {
     target = new PVector(0,0,1);
     newTarget = new PVector(0,0,1);
     angularVelocity = new PVector();
+    orientation = new PVector(0,1,0);
     target.add(location);
     speed = 3;
     upDirection = 0;
@@ -328,7 +330,7 @@ class Camera {
       velocity.z *= drag;
     }
     
-    println("touch: " + touchingWall);
+    //println("touch: " + touchingWall);
     
     location.add(velocity);
     target.add(velocity);
@@ -443,7 +445,6 @@ class Camera {
       angleVertical -= 2*PI;
     }
     
-    PVector orientation = new PVector();
     if (upDirection == 0) {
       orientation.set(0,1,0);
     }
@@ -515,9 +516,12 @@ class Camera {
     target.set(location);
     target.add(radial);
     
+    override.mouseMove(int(displayWidth/2),int(displayHeight/2));
+  }
+  
+  void drawLamp() {
     en.camera(location.x,location.y,location.z,target.x,target.y,target.z,orientation.x,orientation.y,orientation.z);
     en.pointLight(255, 255, 255, location.x, location.y, location.z);
-    override.mouseMove(int(displayWidth/2),int(displayHeight/2));
   }
   
   void drawSights() {
