@@ -25,7 +25,7 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Server: projectiles
 - [x] Client: read in environment
 - [x] Client: store environment
-- [ ] Client: update environment when far enough from last update point
+- [ ] Client: update environment when far enough from last update point (add this if I ever want to make the complex larger)
 - [ ] Client: read in other players
 - [ ] Client: send self data (location, name, color)
 - [ ] Client: read in enemies
@@ -38,3 +38,4 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Add color to environment transfer
 - [ ] Update environment server to take requests from multiple sources
 - [ ] Update central server to perform consolidation (put multiple broadcasts of the same heading type under a single heading)
+- [ ] Store other players as Player objects (subclass of Block with names and lamps)
