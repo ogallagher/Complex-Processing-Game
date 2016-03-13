@@ -66,8 +66,9 @@ void readBlocks(String text) {
     if (id == blocks.size()) {
       int[] location = int(split(extractString(block,locationID,endID),','));
       int[] dimensions = int(split(extractString(block,dimensionsID,endID),','));
+      int[] c = int(split(extractString(block,colorID,endID),','));
       
-      blocks.add(new Block(new PVector(location[0]*blockWidth,location[1]*blockWidth,location[2]*blockWidth), new PVector(dimensions[0]*blockWidth,dimensions[1]*blockWidth,dimensions[2]*blockWidth))); 
+      blocks.add(new Block(new PVector(location[0]*blockWidth,location[1]*blockWidth,location[2]*blockWidth), new PVector(dimensions[0]*blockWidth,dimensions[1]*blockWidth,dimensions[2]*blockWidth), c)); 
     }
     
     start = text.indexOf(nameID,start) + block.length();

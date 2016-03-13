@@ -1,13 +1,11 @@
 class Player extends Block {
   String name;
   int[] lamp;
-  int[] c;
   
   Player(String nam, int[] loc, int[] lam, int[] col) {
-    super(new PVector(loc[0],loc[1],loc[2]), new PVector(blockWidth,blockWidth,blockWidth));
+    super(new PVector(loc[0],loc[1],loc[2]), new PVector(blockWidth,blockWidth,blockWidth), col);
     name = nam;
     lamp = lam;
-    c = col;
   }
   
   void displayPlayer() {

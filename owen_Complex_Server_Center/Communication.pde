@@ -2,19 +2,39 @@ void echo() {                                                      //NOTE: the c
   Client client = server.available();
   if (client != null) {
     String text = client.readString();
-    String address = extractString(text,addressID,endID);
     
-    String requestText = extractString(text,requestHD,endHD);
-    println("REQUEST: " + requestText);
-    String blockText = extractString(text,blockHD,endHD);
-    println("BLOCK.LEN: " + blockText.length());
-    String playerText = extractString(text,playerHD,endHD);
-    println("PLAYER: " + playerText);
+    
+    String requestText = searchString(text,requestHD,endHD);
+    String blockText = searchString(text,blockHD,endHD);
+    String playerText = searchString(text,playerHD,endHD);
     
     broadcast(requestHD + requestText + endHD);
     broadcast(blockHD + blockText + endHD);
     broadcast(playerHD + playerText + endHD);
   }
+}
+
+String searchString(String text, String head, String foot) {      //Find all received data that falls into this type of head-foot interval and join them together
+  String occurences = "";
+  int start = -1;
+  
+  while (text.indexOf(head,start) > -1) {
+    int end = text.indexOf(head,start) + 1;
+    String occurence;
+    
+    if (text.indexOf(head,end) < 0) {
+      occurence = text.substring(text.indexOf(head,start));
+    }
+    else {
+      occurence = text.substring(text.indexOf(head,start),text.indexOf(head,end));
+    }
+    
+    occurences += extractString(occurence,head,foot);
+    
+    start = text.indexOf(head,start) + occurence.length();
+  }
+  
+  return occurences;
 }
 
 void broadcast(String text) {

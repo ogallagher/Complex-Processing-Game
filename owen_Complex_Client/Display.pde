@@ -5,7 +5,7 @@ void displayComplexAndCollision() {
     distance.sub(camera.location);
     
     if (distance.mag() < blockWidth*20) {
-      blocks.get(i).display(color(180,180,180));  
+      blocks.get(i).display();  
       blocks.get(i).detectCollision();
     }
   }
@@ -25,6 +25,6 @@ void displayGoal() {
 
 void displayPlayers() {
   for (int i=0; i<players.size(); i++) {
-    players.get(i).displayPlayer();
+    players.get(i).display();
   }
 }

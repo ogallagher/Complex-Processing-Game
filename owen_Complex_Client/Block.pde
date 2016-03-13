@@ -1,15 +1,17 @@
 class Block {
   PVector location;
   PVector dimensions;
+  int[] c;
   
-  Block(PVector l, PVector d) {
-    location = new PVector(l.x,l.y,l.z);
-    dimensions = new PVector(d.x,d.y,d.z);
+  Block(PVector loc, PVector dim, int[] col) {
+    location = loc;
+    dimensions = dim;
+    c = col;
   }
   
-  void display(color c) {
+  void display() {
     en.pushMatrix();
-    en.fill(c);
+    en.fill(color(c[0],c[1],c[2]));
     en.noStroke();
     en.translate(location.x,location.y,location.z);
     en.box(dimensions.x,dimensions.y,dimensions.z);

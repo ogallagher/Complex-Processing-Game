@@ -35,7 +35,6 @@ void draw() {
   //  Receive incoming messages from clients and specialized servers
   //  Distribute messages to everyone
   //  Admit new players
-  //  Record players' data in local file
   //  Manage games (end games, start new ones, declare winners, send announcements)
   
   echo();
