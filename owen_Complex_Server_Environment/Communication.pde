@@ -9,10 +9,10 @@ void listen() {
 
 void analyzeRequests(String text) {
   int start = -1;
-  int[] requests = {environment.size(),0,0};
+  int[] requests = {environment.size(),-1,0};
   
   while (text.indexOf(nameID,start) > -1) {
-    int end = text.indexOf(nameID,start);
+    int end = text.indexOf(nameID,start) + 1;
     String request;
     
     if (text.indexOf(nameID,end) < 0) {
@@ -24,7 +24,7 @@ void analyzeRequests(String text) {
     
     if (request.indexOf("ENV") > -1) {
       int blockNumber = int(extractString(request,locationID,endID));
-      println("REQUESTED: " + blockNumber);
+      println("BLOCK.#: " + blockNumber);
       
       if (blockNumber == -1) {
         requests[2] = blockNumber;
@@ -50,7 +50,7 @@ void sendEnvironment(int[] requested) {
     broadcast(blockHD + descriptionID + str(blockWidth) + ',' + str(cubicleWidth) + ',' + str(complexWidth) + ',' + str(environment.size()) + endID + endHD);
   }
   
-  if (requested[0] < environment.size() && requested[1] > 0) {
+  if (requested[0] < environment.size() && requested[1] > -1) {
     String broadcast = blockHD;
     
     for (int i=requested[0]; i<requested[1]+200 && i<environment.size(); i++) {

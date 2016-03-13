@@ -47,4 +47,7 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Client: add score
 - [x] Client: add other players list
 - [x] Client: display other players
-- [ ] Client: collide w/ other players
+- [x] Client: collide w/ other players
+- [x] Remove color from environment transfer (sending color made loading the environment WAY too slow)
+- [x] Test pretending there are other players (quit and restart to see my previous self)
+- [ ] Test with multiplt clients at once

@@ -23,8 +23,9 @@ void displayGoal() {
   en.popMatrix();
 }
 
-void displayPlayers() {
+void displayPlayersAndCollision() {
   for (int i=0; i<players.size(); i++) {
-    players.get(i).display();
+    players.get(i).displayPlayer();
+    players.get(i).detectCollision();
   }
 }

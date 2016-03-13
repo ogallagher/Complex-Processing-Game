@@ -25,7 +25,6 @@ String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
 String colorID = "/";
-String lampID = ":";
 String descriptionID = "|";
 String endID = "?";
 
@@ -96,13 +95,10 @@ void draw() {
     en.background(0);
     
     camera.drawLamp();
-    for (int i=0; i<players.size(); i++) {
-      players.get(i).drawLamp();
-    }
     
     displayComplexAndCollision();
     displayGoal();
-    displayPlayers();
+    displayPlayersAndCollision();
     
     en.endDraw();
     image(en,0,0);

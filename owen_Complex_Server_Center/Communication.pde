@@ -3,7 +3,6 @@ void echo() {                                                      //NOTE: the c
   if (client != null) {
     String text = client.readString();
     
-    
     String requestText = searchString(text,requestHD,endHD);
     String blockText = searchString(text,blockHD,endHD);
     String playerText = searchString(text,playerHD,endHD);

@@ -66,7 +66,7 @@ void readBlocks(String text) {
     if (id == blocks.size()) {
       int[] location = int(split(extractString(block,locationID,endID),','));
       int[] dimensions = int(split(extractString(block,dimensionsID,endID),','));
-      int[] c = int(split(extractString(block,colorID,endID),','));
+      int[] c = {200,200,200};//int(split(extractString(block,colorID,endID),','));
       
       blocks.add(new Block(new PVector(location[0]*blockWidth,location[1]*blockWidth,location[2]*blockWidth), new PVector(dimensions[0]*blockWidth,dimensions[1]*blockWidth,dimensions[2]*blockWidth), c)); 
     }
@@ -104,19 +104,14 @@ void readPlayers(String text) {
       
       if (listed > -1) {
         int[] location = int(split(extractString(player,locationID,endID),','));
-        int[] lamp = int(split(extractString(player,lampID,endID),','));
         
         players.get(listed).location.set(location[0],location[1],location[2]);
-        players.get(listed).lamp[0] = lamp[0];
-        players.get(listed).lamp[1] = lamp[1];
-        players.get(listed).lamp[2] = lamp[2];
       }
       else {
         int[] location = int(split(extractString(player,locationID,endID),','));
-        int[] lamp = int(split(extractString(player,lampID,endID),','));
         int[] c = int(split(extractString(player,colorID,endID),','));
         
-        players.add(new Player(name, location, lamp, c));
+        players.add(new Player(name, location, c));
       }
     }
     
@@ -134,6 +129,9 @@ void readProjectiles(String text) {
 
 void sendData() {
   String broadcast = playerHD + 
+                       addressID + 
+                         myAddress + 
+                       endID + 
                        nameID + 
                          myName + 
                        endID + 
@@ -141,11 +139,6 @@ void sendData() {
                          str(round(camera.location.x)) + ',' + 
                          str(round(camera.location.y)) + ',' + 
                          str(round(camera.location.z)) + 
-                       endID + 
-                       lampID + 
-                         str(round(camera.lamp.x)) + ',' + 
-                         str(round(camera.lamp.y)) + ',' + 
-                         str(round(camera.lamp.z)) + ',' +
                        endID + 
                        colorID + 
                          "255,0,50" +
@@ -158,9 +151,11 @@ void sendData() {
 void requestData() {
   if (environmentStage < 0) {
     broadcast(requestHD + nameID + "ENV" + endID + locationID + "-1" + endID + endHD);
+    println("REQUESTING");
   }
   else if (blocks.size() < blockMax) {
     broadcast(requestHD + nameID + "ENV" + endID + locationID + blocks.size() + endID + endHD);
+    println("REQUESTING");
   }
   else {
     environmentStage = 1;

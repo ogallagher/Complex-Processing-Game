@@ -20,7 +20,6 @@ String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
 String colorID = "/";
-String lampID = ":";
 String descriptionID = "|";
 String endID = "?";
 
@@ -36,4 +35,5 @@ void setup() {
 
 void draw() {
   listen();
+  println("PLAYERS.#: " + players.size());
 }
