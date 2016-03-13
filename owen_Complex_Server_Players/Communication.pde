@@ -36,15 +36,25 @@ void analyzePlayers(String text) {
     
     if (listed > -1) {
       int[] location = int(split(extractString(player,locationID,endID),','));
-      int[] c = int(split(extractString(player,colorID,endID),','));
+      String cString = extractString(player,colorID,endID);
+      int[] c = {};
+      if (cString.length() > 0) {
+        c = int(split(extractString(player,colorID,endID),','));
+      }
       
       players.get(listed).location = location;
-      players.get(listed).c = c;
+      if (c.length > 0) {
+        players.get(listed).c = c;
+      }
     }
     else {
       String name = extractString(player,nameID,endID);
       int[] location = int(split(extractString(player,locationID,endID),','));
-      int[] c = int(split(extractString(player,colorID,endID),','));
+      String cString = extractString(player,colorID,endID);
+      int[] c = {0,0,0};
+      if (cString.length() > 0) {
+        c = int(split(extractString(player,colorID,endID),','));
+      }
       
       players.add(new Player(address, name, location, c));
     }

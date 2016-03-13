@@ -44,6 +44,7 @@ Robot override;
 SoundFile[] sounds;
 
 int environmentStage = -1;
+int selfStage = -1;
 
 void setup() {
   size(800,800,P2D);
@@ -112,7 +113,7 @@ void draw() {
     }
     else {
       pushMatrix();
-      fill(0,255,80);
+      fill(0,230,80,30);
       noStroke();
       rect(10, (height/2)-100, float(blocks.size()) / float(blockMax) * float(width-20), 200);
       popMatrix();

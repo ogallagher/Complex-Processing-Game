@@ -62,7 +62,6 @@ void readBlocks(String text) {
     println("BLOCK.DATA: " + block);
     
     int id = int(extractString(block,nameID,endID));
-    println("SIZE,ID: " + blocks.size() + ',' + id);
     if (id == blocks.size()) {
       int[] location = int(split(extractString(block,locationID,endID),','));
       int[] dimensions = int(split(extractString(block,dimensionsID,endID),','));
@@ -114,6 +113,9 @@ void readPlayers(String text) {
         players.add(new Player(name, location, c));
       }
     }
+    else if (selfStage < 0) {
+      selfStage = 0;
+    }
     
     start = text.indexOf(nameID,start) + player.length();
   }
@@ -139,11 +141,12 @@ void sendData() {
                          str(round(camera.location.x)) + ',' + 
                          str(round(camera.location.y)) + ',' + 
                          str(round(camera.location.z)) + 
-                       endID + 
-                       colorID + 
-                         "255,0,50" +
-                       endID + 
-                     endHD;
+                       endID;
+                       
+  if (selfStage > -1) {
+    broadcast += colorID + "255,0,50" + endID;
+  }
+  broadcast += endHD;
   
   broadcast(broadcast);
 }
