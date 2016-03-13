@@ -20,14 +20,19 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] ¿Compass that shows where "North" (positive direction along z-axis) is?
 - [x] Server: environment
 - [x] Server: communication
-- [ ] Server: players
+- [x] Server: players
 - [ ] Server: enemies
 - [ ] Server: projectiles
 - [x] Client: read in environment
 - [x] Client: store environment
+<<<<<<< Updated upstream
 - [ ] Client: update environment when far enough from last update point (add this if I ever want to make the complex larger)
 - [ ] Client: read in other players
 - [ ] Client: send self data (location, name, color)
+=======
+- [x] Client: read in other players
+- [x] Client: send self data (location, name, color)
+>>>>>>> Stashed changes
 - [ ] Client: read in enemies
 - [ ] Server: create AI for enemies, so they move around obstacles
 - [ ] Client: ¿Sound effects... how much will this slow the game down, and is it worth the effort?
@@ -38,4 +43,16 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [ ] Add color to environment transfer
 - [ ] Update environment server to take requests from multiple sources
 - [ ] Update central server to perform consolidation (put multiple broadcasts of the same heading type under a single heading)
+<<<<<<< Updated upstream
 - [ ] Store other players as Player objects (subclass of Block with names and lamps)
+=======
+- [x] Server: players: add new clients
+- [x] Server: players: replace client data
+- [x] Server: players: send client data
+- [ ] Server: players: add clients file
+- [ ] Server: players: update clients file
+- [ ] Client: add score
+- [x] Client: add other players list
+- [x] Client: display other players
+- [ ] Client: collide w/ other players
+>>>>>>> Stashed changes

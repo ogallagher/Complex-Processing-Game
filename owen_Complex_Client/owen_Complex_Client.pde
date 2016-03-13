@@ -7,6 +7,7 @@ import java.awt.*;
 String serverAddress = "74.71.101.15";
 int port = 55555;
 String myAddress = "";
+String myName = "";
 
 //Headers
 String messageHD = "&";
@@ -24,6 +25,7 @@ String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
 String colorID = "/";
+String lampID = ":";
 String descriptionID = "|";
 String endID = "?";
 
@@ -31,7 +33,9 @@ ArrayList<Block> blocks = new ArrayList<Block>();  // #|200,10,5,100?!  => block
 int complexWidth = 5;    //cubicles
 int cubicleWidth = 10;   //blocks
 int blockWidth = 200;    //pixels
-int blockMax = 0;        //How to know when to stop asking for more blocks
+int blockMax = 0;        //When to stop asking for more blocks
+
+ArrayList<Player> players = new ArrayList<Player>();
 
 PGraphics en;
 
@@ -50,6 +54,7 @@ void setup() {
   for (int i=0; i<5; i++) {
     myAddress += str(int(random(0,9)));
   }
+  myName = myAddress;
   
   try {
     override = new Robot();
@@ -89,9 +94,16 @@ void draw() {
     
     en.beginDraw();
     en.background(0);
+    
     camera.drawLamp();
+    for (int i=0; i<players.size(); i++) {
+      players.get(i).drawLamp();
+    }
+    
     displayComplexAndCollision();
     displayGoal();
+    displayPlayers();
+    
     en.endDraw();
     image(en,0,0);
     

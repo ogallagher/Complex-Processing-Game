@@ -1,7 +1,6 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();
-    //println("Incoming: " + text);
     
     String messageText = extractString(text, messageHD, endHD);
     String blockText = extractString(text, blockHD, endHD);
@@ -26,7 +25,6 @@ void readMessages(String text) {
     String subtext = text.substring(text.indexOf(nameID,start));
     
     String message = extractString(subtext,nameID,endID);
-    //println("MESSAGE: " + message);
     
     start = text.indexOf(nameID,start) + message.length() + 2;
   }
@@ -74,11 +72,55 @@ void readBlocks(String text) {
     
     start = text.indexOf(nameID,start) + block.length();
   }
-  println("BLOCK.#: " + blocks.size());
 }
 
 void readPlayers(String text) {
+  int start = -1;
   
+  while (text.indexOf(nameID,start) > -1) {
+    int end = text.indexOf(nameID,start) + 1;
+    String player;
+    
+    if (text.indexOf(nameID,end) < 0) {
+      player = text.substring(text.indexOf(nameID,start));
+    }
+    else {
+      player = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
+    }
+    
+    String name = extractString(player,nameID,endID);
+    int listed = -1;
+    if (!name.equals(myName)) {
+      for (int i=0; i<players.size(); i++) {
+        if (listed == -1) {
+          String otherName = players.get(i).name;
+          
+          if (name.equals(otherName)) {
+            listed = i;
+          }
+        }
+      }
+      
+      if (listed > -1) {
+        int[] location = int(split(extractString(player,locationID,endID),','));
+        int[] lamp = int(split(extractString(player,lampID,endID),','));
+        
+        players.get(listed).location.set(location[0],location[1],location[2]);
+        players.get(listed).lamp[0] = lamp[0];
+        players.get(listed).lamp[1] = lamp[1];
+        players.get(listed).lamp[2] = lamp[2];
+      }
+      else {
+        int[] location = int(split(extractString(player,locationID,endID),','));
+        int[] lamp = int(split(extractString(player,lampID,endID),','));
+        int[] c = int(split(extractString(player,colorID,endID),','));
+        
+        players.add(new Player(name, location, lamp, c));
+      }
+    }
+    
+    start = text.indexOf(nameID,start) + player.length();
+  }
 }
 
 void readEnemies(String text) {
@@ -90,7 +132,26 @@ void readProjectiles(String text) {
 }
 
 void sendData() {
+  String broadcast = playerHD + 
+                       nameID + 
+                         myName + 
+                       endID + 
+                       locationID + 
+                         str(round(camera.location.x)) + ',' + 
+                         str(round(camera.location.y)) + ',' + 
+                         str(round(camera.location.z)) + 
+                       endID + 
+                       lampID + 
+                         str(round(camera.lamp.x)) + ',' + 
+                         str(round(camera.lamp.y)) + ',' + 
+                         str(round(camera.lamp.z)) + ',' +
+                       endID + 
+                       colorID + 
+                         "255,0,50" +
+                       endID + 
+                     endHD;
   
+  broadcast(broadcast);
 }
 
 void requestData() {

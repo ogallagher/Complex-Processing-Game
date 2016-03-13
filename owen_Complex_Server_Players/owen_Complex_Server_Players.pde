@@ -1,9 +1,8 @@
-//owen_Complex_Server
-
+//owen_Complex_Server_Players
 import processing.net.*;
 
-Server server;
-int serverPort = 55555;
+String serverAddress = "74.71.101.15";
+int port = 55555;
 
 //Headers
 String messageHD = "&";
@@ -25,18 +24,16 @@ String lampID = ":";
 String descriptionID = "|";
 String endID = "?";
 
+ArrayList<Player> players = new ArrayList<Player>();
+
+Client client;
+
 void setup() {
-  size(600,300);
-  server = new Server(this,serverPort);
+  size(200,200,P2D);
+  
+  client = new Client(this, serverAddress, port);
 }
 
 void draw() {
-  //TASKS:
-  //  Receive incoming messages from clients and specialized servers
-  //  Distribute messages to everyone
-  //  Admit new players
-  //  Record players' data in local file
-  //  Manage games (end games, start new ones, declare winners, send announcements)
-  
-  echo();
+  listen();
 }

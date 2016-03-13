@@ -1,14 +1,13 @@
 class Face {
   PVector origin;
   PVector plane;
-  color c;
+  int[] c = {int(random(0,100)), int(random(150,255)), int(random(150,255))};
   
   ArrayList<Feature> features = new ArrayList<Feature>();
   
   Face(PVector cubicle, PVector center) {
     origin = new PVector(cubicle.x,cubicle.y,cubicle.z);
     plane = new PVector(0,0,0);
-    c = color(int(random(0,150)),int(random(150,255)),int(random(150,255)));
     
     origin.add(center);
     
@@ -43,17 +42,6 @@ class Face {
     }
     else if (p < 0.8) {
       features.add(new Feature(origin, plane, 5));
-    }
-  }
-  
-  void display() {
-    PVector distance = new PVector();
-    distance.set(origin);
-    distance.sub(camera.location);
-    if (distance.mag() < blockWidth*20) {
-      for (int i=0; i<features.size(); i++) {
-        features.get(i).display(c);
-      }
     }
   }
 }

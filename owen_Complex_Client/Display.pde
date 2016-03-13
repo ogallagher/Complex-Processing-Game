@@ -22,3 +22,9 @@ void displayGoal() {
   en.box(blockWidth);
   en.popMatrix();
 }
+
+void displayPlayers() {
+  for (int i=0; i<players.size(); i++) {
+    players.get(i).displayPlayer();
+  }
+}

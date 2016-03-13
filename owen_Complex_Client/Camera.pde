@@ -6,6 +6,7 @@ class Camera {
   PVector newTarget;
   PVector angularVelocity;
   PVector orientation;
+  PVector lamp;
   float speed;
   int upDirection;
   boolean orienting;
@@ -20,6 +21,7 @@ class Camera {
     newTarget = new PVector(0,0,1);
     angularVelocity = new PVector();
     orientation = new PVector(0,1,0);
+    lamp = new PVector(location.x,location.y,location.z);
     target.add(location);
     speed = 3;
     upDirection = 0;
@@ -520,8 +522,10 @@ class Camera {
   }
   
   void drawLamp() {
+    lamp.set(location.x + (orientation.x*blockWidth), location.y + (orientation.y*blockWidth*-1), location.z + (orientation.z*blockWidth));
+    
     en.camera(location.x,location.y,location.z,target.x,target.y,target.z,orientation.x,orientation.y,orientation.z);
-    en.pointLight(255, 255, 255, location.x, location.y, location.z);
+    en.pointLight(255, 255, 255, lamp.x, lamp.y, lamp.z);
   }
   
   void drawSights() {

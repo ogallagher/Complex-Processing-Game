@@ -1,4 +1,4 @@
-void listen() {                                                      //NOTE: the central server will be getting multiple of each header, eventually. It then consolidates them before sending again.
+void echo() {                                                      //NOTE: the central server will be getting multiple of each header, eventually. It then consolidates them before sending again.
   Client client = server.available();
   if (client != null) {
     String text = client.readString();
@@ -7,10 +7,13 @@ void listen() {                                                      //NOTE: the
     String requestText = extractString(text,requestHD,endHD);
     println("REQUEST: " + requestText);
     String blockText = extractString(text,blockHD,endHD);
-    println("BLOCKDATA: " + blockText.length());
+    println("BLOCK.LEN: " + blockText.length());
+    String playerText = extractString(text,playerHD,endHD);
+    println("PLAYER: " + playerText);
     
     broadcast(requestHD + requestText + endHD);
     broadcast(blockHD + blockText + endHD);
+    broadcast(playerHD + playerText + endHD);
   }
 }
 

@@ -1,8 +1,6 @@
 void listen() {
   if (client.available() > 0) {
-    String text = client.readString();
-    //println("Incoming: " + text);
-    
+    String text = client.readString();    
     String requestText = extractString(text,requestHD,endHD);                //Eventually, this will have to take multiple requested blockNumbers
     
     if (requestText.indexOf(nameID + "ENV" + endID) > -1) {

@@ -174,11 +174,4 @@ class Feature {
       blocks.add(new Block(new PVector(x,y,z), dimensions));
     }
   }
-  
-  void display(color c) {
-    for (int i=0; i<blocks.size(); i++) {
-      blocks.get(i).display(c);
-      blocks.get(i).detectCollision();
-    }
-  }
 }
