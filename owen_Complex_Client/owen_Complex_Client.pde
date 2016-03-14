@@ -87,10 +87,13 @@ void draw() {
   }
   
   listen();
+  println("PLAYERS.#: " + players.size());
   
   if (environmentStage > -1) {
     camera.orient();
     camera.look();
+    
+    movePlayers();
     
     en.beginDraw();
     en.background(0);

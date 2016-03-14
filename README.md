@@ -52,4 +52,6 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [x] Test pretending there are other players (quit and restart to see my previous self)
 - [x] Test with multiplt clients at once
 - [x] Client: stop sending color once the player server once player server has mine recorded
-- [ ] Client: smooth other players' movement (other players look pretty choppy right now)
+- [x] Client: smooth other players' movement through 2-point interpolation (glide to next point)
+- [x] Client: store previous and future locations for players
+- [x] Client: update previous and future other player locations

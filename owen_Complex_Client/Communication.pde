@@ -3,13 +3,13 @@ void listen() {
     String text = client.readString();
     
     String messageText = extractString(text, messageHD, endHD);
-    String blockText = extractString(text, blockHD, endHD);
     String playerText = extractString(text, playerHD, endHD);
     String enemyText = extractString(text, enemyHD, endHD);
     String projectileText = extractString(text, projectileHD, endHD);
     
     readMessages(messageText);
     if (environmentStage < 1) {
+      String blockText = extractString(text, blockHD, endHD);
       readBlocks(blockText);
     }
     readPlayers(playerText);
@@ -104,7 +104,7 @@ void readPlayers(String text) {
       if (listed > -1) {
         int[] location = int(split(extractString(player,locationID,endID),','));
         
-        players.get(listed).location.set(location[0],location[1],location[2]);
+        players.get(listed).updateFuture(location);
       }
       else {
         int[] location = int(split(extractString(player,locationID,endID),','));
