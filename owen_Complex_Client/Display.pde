@@ -32,7 +32,7 @@ void displayGoal() {
 void displayPlayersAndCollision() {
   for (int i=0; i<players.size(); i++) {
     PVector distance = new PVector();
-    distance.set(blocks.get(i).location);
+    distance.set(players.get(i).location);
     distance.sub(camera.location);
     
     if (distance.mag() < blockWidth*20) {

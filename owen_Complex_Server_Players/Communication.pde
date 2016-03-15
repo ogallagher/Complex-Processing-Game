@@ -36,27 +36,14 @@ void analyzePlayers(String text) {
     
     if (listed > -1) {
       int[] location = int(split(extractString(player,locationID,endID),','));
-      String cString = extractString(player,colorID,endID);
-      int[] c = {};
-      if (cString.length() > 0) {
-        c = int(split(extractString(player,colorID,endID),','));
-      }
       
       players.get(listed).location = location;
-      if (c.length > 0) {
-        players.get(listed).c = c;
-      }
     }
     else {
       String name = extractString(player,nameID,endID);
       int[] location = int(split(extractString(player,locationID,endID),','));
-      String cString = extractString(player,colorID,endID);
-      int[] c = {0,0,0};
-      if (cString.length() > 0) {
-        c = int(split(extractString(player,colorID,endID),','));
-      }
       
-      players.add(new Player(address, name, location, c));
+      players.add(new Player(address, name, location));
     }
     
     start = text.indexOf(addressID,start) + player.length();
@@ -71,7 +58,7 @@ void sendPlayers() {
     
     broadcast += nameID + player.name + endID;
     broadcast += locationID + str(player.location[0]) + ',' + str(player.location[1]) + ',' + str(player.location[2]) + endID;
-    broadcast += colorID + str(player.c[0]) + ',' + str(player.c[1]) + ',' + str(player.c[2]) + endID;
+    //broadcast += colorID + str(player.c[0]) + ',' + str(player.c[1]) + ',' + str(player.c[2]) + endID;
   }
   
   broadcast += endHD;

@@ -98,9 +98,8 @@ void recordEnvironment() {
           
           String location = locationID + str(int(block.location.x / blockWidth)) + ',' + str(int(block.location.y / blockWidth)) + ',' + str(int(block.location.z / blockWidth)) + endID;
           String dimensions = dimensionsID + str(int(block.dimensions.x / blockWidth)) + ',' + str(int(block.dimensions.y / blockWidth)) + ',' + str(int(block.dimensions.z / blockWidth)) + endID;
-          String colors = colorID + str(cubicles.get(cub).faces.get(fac).c[0]) + ',' + str(cubicles.get(cub).faces.get(fac).c[1]) + ',' + str(cubicles.get(cub).faces.get(fac).c[2]) + endID;
           
-          environment.append(location + dimensions/* + colors*/);
+          environment.append(location + dimensions);
         }
       }
     }

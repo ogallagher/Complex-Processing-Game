@@ -1,5 +1,5 @@
 # Complex
-A soon-to-be 3D multiplayer game, written wholly in Processing
+A soon-to-be 3D multiplayer game, written in Processing
 
 
 # Development
@@ -50,8 +50,16 @@ A soon-to-be 3D multiplayer game, written wholly in Processing
 - [x] Client: collide w/ other players
 - [x] Remove color from environment transfer (sending color made loading the environment WAY too slow)
 - [x] Test pretending there are other players (quit and restart to see my previous self)
-- [x] Test with multiplt clients at once
+- [x] Test with multiple clients at once
 - [x] Client: stop sending color once the player server once player server has mine recorded
 - [x] Client: smooth other players' movement through 2-point interpolation (glide to next point)
 - [x] Client: store previous and future locations for players
 - [x] Client: update previous and future other player locations
+- [x] Fix environment transfer to send packets of ~200 to each request
+- [ ] Client: change mouse controls to record mouse movement?
+- [ ] Client: assign random colors to other players (don't send colors over internet)
+- [ ] Run multiple redundant servers to prevent data loss? Potential problem: one server might send other player updates to a client that are outdated. Solution: have all programs run on a standardized time, and only accept updates registered in the future.
+- [ ] Client: predict fall for players if in the air?
+- [x] Server: have the environment server keep a list of requested blockNumbers. Then send packets for each one at a time.
+- [x] Client: if end header is not visible, read everything to the end of the data string
+- [x] Debug blockNumber list and reading broken messages

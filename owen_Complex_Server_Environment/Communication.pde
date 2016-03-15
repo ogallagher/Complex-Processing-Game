@@ -1,7 +1,7 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();    
-    String requestText = extractString(text,requestHD,endHD);                //this will have to take multiple requested blockNumbers
+    String requestText = extractString(text,requestHD,endHD);                //this will have to take multiple requested requests
     
     analyzeRequests(requestText);
   }
@@ -9,7 +9,6 @@ void listen() {
 
 void analyzeRequests(String text) {
   int start = -1;
-  int[] requests = {environment.size(),-1,0};
   
   while (text.indexOf(nameID,start) > -1) {
     int end = text.indexOf(nameID,start) + 1;
@@ -24,36 +23,26 @@ void analyzeRequests(String text) {
     
     if (request.indexOf("ENV") > -1) {
       int blockNumber = int(extractString(request,locationID,endID));
+      requests.append(blockNumber);
       println("BLOCK.#: " + blockNumber);
-      
-      if (blockNumber == -1) {
-        requests[2] = blockNumber;
-      }
-      else {
-        if (blockNumber < requests[0]) {
-          requests[0] = blockNumber;
-        }
-        if (blockNumber > requests[1]) {
-          requests[1] = blockNumber;
-        }
-      }
     }
     
     start = text.indexOf(nameID,start) + request.length();
   }
-  
-  sendEnvironment(requests);
 }
 
-void sendEnvironment(int[] requested) {
-  if (requested[2] == -1) {
+void sendEnvironment() {
+  int requested = requests.get(0);
+  requests.remove(0);
+  
+  if (requested == -1) {
     broadcast(blockHD + descriptionID + str(blockWidth) + ',' + str(cubicleWidth) + ',' + str(complexWidth) + ',' + str(environment.size()) + endID + endHD);
   }
   
-  if (requested[0] < environment.size() && requested[1] > -1) {
+  else {
     String broadcast = blockHD;
     
-    for (int i=requested[0]; i<requested[1]+200 && i<environment.size(); i++) {
+    for (int i=requested; i<requested+200 && i<environment.size(); i++) {
       broadcast += nameID + str(i) + endID + environment.get(i);
     }
     

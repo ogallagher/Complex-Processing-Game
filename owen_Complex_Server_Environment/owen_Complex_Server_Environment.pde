@@ -26,6 +26,7 @@ String descriptionID = "|";
 String endID = "?";
 
 StringList environment = new StringList();
+IntList requests = new IntList();
 ArrayList<Cubicle> cubicles = new ArrayList<Cubicle>();
 int complexWidth = 5;   //  cubicles (5 X 5 X 5)
 int cubicleWidth = 10;  //  blocks
@@ -47,4 +48,8 @@ void setup() {
 
 void draw() {
   listen();
+  
+  if (requests.size() > 0) {
+    sendEnvironment();
+  }
 }
