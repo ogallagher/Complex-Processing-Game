@@ -58,8 +58,13 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Fix environment transfer to send packets of ~200 to each request
 - [ ] Client: change mouse controls to record mouse movement?
 - [x] Client: assign random colors to other players (don't send colors over internet)
-- [ ] Run multiple redundant servers to prevent data loss? Potential problem: one server might send other player updates to a client that are outdated. Solution: have all programs run on a standardized time, and only accept updates registered in the future.
+- [ ] Test running multiple redundant player servers to prevent data loss? Potential problem: one server might send other player updates to a client that are outdated. Solution: have all programs run on a standardized time, and only accept updates with a time-stamp from the future.
 - [ ] Client: predict fall for players if in the air?
 - [x] Server: have the environment server keep a list of requested blockNumbers. Then send packets for each one at a time.
 - [x] Client: if end header is not visible, read everything to the end of the data string
 - [x] Debug blockNumber list and reading broken messages
+- [ ] Client: other players' movement is better (smoother), but still flickers. Problem is not so much gaps in movement any more. Solution: ??... for now, just examine the program to find the problem.
+- [x] Introduce standardized time.
+- [x] Server: Put time stamps on sent player data
+- [x] Client: Only read in other player data if time-stamp > that player's last time-stamp
+- [ ] Test other players' updates w/ and w/o time-stamp condition above

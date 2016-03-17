@@ -155,32 +155,36 @@ void readPlayers(String text) {
     
     if (player.length() > 0) {
       String name = extractString(player,nameID,endID);
-      int listed = -1;
-      if (!name.equals(myName)) {
-        for (int i=0; i<players.size(); i++) {
-          if (listed == -1) {
-            String otherName = players.get(i).name;
-            
-            if (name.equals(otherName)) {
-              listed = i;
+      String timeStamp = extractString(player,timeID,endID);
+      
+      if (timeStamp.length() > 0) {
+        int listed = -1;
+        if (!name.equals(myName)) {
+          for (int i=0; i<players.size(); i++) {
+            if (listed == -1) {
+              String otherName = players.get(i).name;
+              
+              if (name.equals(otherName)) {
+                listed = i;
+              }
             }
           }
-        }
-        
-        if (listed > -1) {
-          int[] location = int(split(extractString(player,locationID,endID),','));
           
-          players.get(listed).updateFuture(location);
+          if (listed > -1 && toLong(timeStamp) > players.get(listed).lastUpdate) {
+            int[] location = int(split(extractString(player,locationID,endID),','));
+            
+            players.get(listed).updateFuture(location,toLong(timeStamp));
+          }
+          else {
+            int[] location = int(split(extractString(player,locationID,endID),','));
+            int[] c = {int(random(0,255)),int(random(100,255)),int(random(100,255))};
+            
+            players.add(new Player(name, location, c));
+          }
         }
-        else {
-          int[] location = int(split(extractString(player,locationID,endID),','));
-          int[] c = {int(random(0,255)),int(random(100,255)),int(random(100,255))};
-          
-          players.add(new Player(name, location, c));
+        else if (selfStage < 0) {
+          selfStage = 0;
         }
-      }
-      else if (selfStage < 0) {
-        selfStage = 0;
       }
     }
     

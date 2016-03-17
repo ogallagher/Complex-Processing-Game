@@ -20,9 +20,12 @@ String nameID = "{";
 String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
-String colorID = "/";
 String descriptionID = "|";
+String timeID = "+";
 String endID = "?";
+
+//Coordinated Universal Time (UTC)
+long clock = 0;
 
 void setup() {
   size(600,300);
@@ -37,4 +40,5 @@ void draw() {
   //  Manage games (end games, start new ones, declare winners, send announcements)
   
   echo();
+  tick();
 }

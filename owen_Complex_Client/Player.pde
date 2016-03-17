@@ -1,18 +1,22 @@
 class Player extends Block {
   PVector future;
   String name;
+  long lastUpdate;
   
   Player(String nam, int[] loc, int[] col) {
     super(new PVector(loc[0],loc[1],loc[2]), new PVector(blockWidth,blockWidth,blockWidth), col);
     future = location;
     name = nam;
+    lastUpdate = 0;
   }
   
-  void updateFuture(int[] newFuture) {    
+  void updateFuture(int[] newFuture, long newTime) {    
     location.set(future);
     future.x = newFuture[0];
     future.y = newFuture[1];
     future.z = newFuture[2];
+    
+    lastUpdate = newTime;
   }
   
   void move() {

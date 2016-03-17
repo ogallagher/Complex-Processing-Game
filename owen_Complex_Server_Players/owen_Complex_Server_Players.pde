@@ -19,9 +19,12 @@ String nameID = "{";
 String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
-String colorID = "/";
 String descriptionID = "|";
+String timeID = "+";
 String endID = "?";
+
+//Coordinated Universal Time (UTC)
+long clock = 0;
 
 ArrayList<Player> players = new ArrayList<Player>();
 
@@ -35,5 +38,6 @@ void setup() {
 
 void draw() {
   listen();
+  tick();
   println("PLAYERS.#: " + players.size());
 }

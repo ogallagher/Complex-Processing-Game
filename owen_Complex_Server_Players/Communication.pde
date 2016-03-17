@@ -58,7 +58,7 @@ void sendPlayers() {
     
     broadcast += nameID + player.name + endID;
     broadcast += locationID + str(player.location[0]) + ',' + str(player.location[1]) + ',' + str(player.location[2]) + endID;
-    //broadcast += colorID + str(player.c[0]) + ',' + str(player.c[1]) + ',' + str(player.c[2]) + endID;
+    broadcast += timeID + str(clock) + endID;
   }
   
   broadcast += endHD;

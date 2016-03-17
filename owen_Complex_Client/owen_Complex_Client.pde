@@ -24,9 +24,12 @@ String nameID = "{";
 String locationID = "(";
 String velocityID = "<";
 String dimensionsID = "[";
-String colorID = "/";
 String descriptionID = "|";
+String timeID = "+";
 String endID = "?";
+
+//Coordinated Universal Time (UTC)
+long clock = 0;
 
 ArrayList<Block> blocks = new ArrayList<Block>();  // #|200,10,5,100?!  => blockWidth, cubicleWidth, complexWidth, blockMax
 int complexWidth = 5;    //cubicles
@@ -124,6 +127,6 @@ void draw() {
   }
   
   sendData();
-  
   requestData();
+  tick();
 }
