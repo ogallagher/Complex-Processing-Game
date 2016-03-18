@@ -170,10 +170,12 @@ void readPlayers(String text) {
             }
           }
           
-          if (listed > -1 && toLong(timeStamp) > players.get(listed).lastUpdate) {
-            int[] location = int(split(extractString(player,locationID,endID),','));
-            
-            players.get(listed).updateFuture(location,toLong(timeStamp));
+          if (listed > -1) {
+            if (toLong(timeStamp) > players.get(listed).lastUpdate) {
+              int[] location = int(split(extractString(player,locationID,endID),','));
+              
+              players.get(listed).updateFuture(location,toLong(timeStamp));
+            }
           }
           else {
             int[] location = int(split(extractString(player,locationID,endID),','));

@@ -38,6 +38,7 @@ int blockWidth = 200;    //pixels
 int blockMax = 0;        //When to stop asking for more blocks
 
 ArrayList<Player> players = new ArrayList<Player>();
+ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
 PGraphics en;
 
@@ -80,8 +81,8 @@ void draw() {
   //  Update lists of blocks, players, enemies, projectiles, announcements
   //  Control player movement, reorientation, gravity, collision
   //  Draw environment, players, enemies, projectiles, announcements
-  //  Shoot projectiles
-  //  Die
+  //  Shoot projectiles (and continue to send those that haven't been validated)
+  //  Die (to check if shot, just keep previoud and current projectile locations, then draw lines between them and see if lines pass through camera block)
   //  Send new data
   //  Request new data
   

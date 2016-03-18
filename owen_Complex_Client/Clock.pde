@@ -1,8 +1,12 @@
 void tick() {
   clock = System.currentTimeMillis();
-  println("T: " + clock);
 }
 
 long toLong(String input) {
-  return Long.parseLong(input);
+  if (input.indexOf('E') < 0) {
+    return Long.parseLong(input);
+  }
+  else {
+    return 0;
+  }
 }

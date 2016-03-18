@@ -67,4 +67,4 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Introduce standardized time.
 - [x] Server: Put time stamps on sent player data
 - [x] Client: Only read in other player data if time-stamp > that player's last time-stamp
-- [ ] Test other players' updates w/ and w/o time-stamp condition above
+- [x] Test other players' updates w/ and w/o time-stamp condition above RESULT: doesn't make a very notable difference, especially with only 2 players at a time...
