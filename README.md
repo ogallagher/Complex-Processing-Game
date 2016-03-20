@@ -68,3 +68,7 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Server: Put time stamps on sent player data
 - [x] Client: Only read in other player data if time-stamp > that player's last time-stamp
 - [x] Test other players' updates w/ and w/o time-stamp condition above RESULT: doesn't make a very notable difference, especially with only 2 players at a time...
+- [x] Server: have projectile server load in a saved environment and check projectile-block collisions
+- [ ] Client: introduce protocols for projectile requests, deletions, and updates 
+- [x] Server: sends out deleted projectiles as well as current ones
+- [ ] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()... almost, but there are a few bugs

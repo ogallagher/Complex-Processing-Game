@@ -46,6 +46,7 @@ Client client;
 Camera camera;
 Robot override;
 SoundFile[] sounds;
+boolean[] keys;
 
 int environmentStage = -1;
 int selfStage = -1;
@@ -72,6 +73,10 @@ void setup() {
   override.mouseMove(int(displayWidth/2),int(displayHeight/2));
   
   sounds = new SoundFile[0];
+  keys = new boolean[6];    //W A S D E SPACE
+  for (int i=0; i<keys.length; i++) {
+    keys[i] = false;
+  }
 }
 
 void draw() {
@@ -82,7 +87,7 @@ void draw() {
   //  Control player movement, reorientation, gravity, collision
   //  Draw environment, players, enemies, projectiles, announcements
   //  Shoot projectiles (and continue to send those that haven't been validated)
-  //  Die (to check if shot, just keep previoud and current projectile locations, then draw lines between them and see if lines pass through camera block)
+  //  Die (to check if shot, just keep previous and current projectile locations, then draw lines between them and see if lines pass through camera block)
   //  Send new data
   //  Request new data
   
@@ -94,6 +99,8 @@ void draw() {
   println("PLAYERS.#: " + players.size());
   
   if (environmentStage > -1) {
+    updateKeys();
+    
     camera.orient();
     camera.look();
     

@@ -29,7 +29,7 @@ class Camera {
   }
   
   void orient() {
-    if (keyPressed && key == 'e' && !orienting) {
+    if (keys[4] && !orienting) {
       PVector radial = new PVector();
       radial.set(target);
       radial.sub(location);
@@ -84,7 +84,7 @@ class Camera {
   }
   
   void control() {
-    if (keyPressed) {
+    //if (keyPressed) {
       PVector movement = new PVector();
       if (upDirection == 0 || upDirection == 2) {
         movement.set(target.x,target.z);
@@ -101,7 +101,7 @@ class Camera {
       movement.normalize();
       movement.mult(speed);
       
-      if (key == 'a') {
+      if (keys[1]) {
         float angle = movement.heading();
         float magnitude = movement.mag();
         
@@ -154,7 +154,7 @@ class Camera {
           velocity.y += movement.y;
         }
       }
-      if (key == 'd') {
+      if (keys[3]) {
         float angle = movement.heading();
         float magnitude = movement.mag();
         
@@ -207,7 +207,7 @@ class Camera {
           velocity.y += movement.y;
         }
       }
-      if (key == 'w') {
+      if (keys[0]) {
         if (upDirection == 0 || upDirection == 2) {
           velocity.x += movement.x;
           velocity.z += movement.y;
@@ -221,7 +221,7 @@ class Camera {
           velocity.y += movement.y;
         }
       }
-      if (key == 's') {
+      if (keys[2]) {
         float angle = movement.heading();
         float magnitude = movement.mag();
         angle += PI;
@@ -259,7 +259,7 @@ class Camera {
       if (key == 'o') {
         upDirection = 5;
       }
-      if (key == ' ') {
+      if (keys[5]) {
         if (upDirection == 0 && touchingWall.hasValue(2)) {
           velocity.y = -1 * speed * 10;
         }
@@ -279,7 +279,7 @@ class Camera {
           velocity.z = speed * 10;
         }
       }
-    }
+    //}
   }
   
   void fall() {
@@ -329,8 +329,6 @@ class Camera {
       velocity.y *= friction;
       velocity.z *= drag;
     }
-    
-    //println("touch: " + touchingWall);
     
     location.add(velocity);
     target.add(velocity);
