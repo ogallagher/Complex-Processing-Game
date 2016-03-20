@@ -96,7 +96,7 @@ void draw() {
   }
   
   listen();
-  println("PLAYERS.#: " + players.size());
+  //println("PLAYERS.#: " + players.size());
   
   if (environmentStage > -1) {
     updateKeys();

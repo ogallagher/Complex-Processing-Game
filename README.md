@@ -71,4 +71,4 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Server: have projectile server load in a saved environment and check projectile-block collisions
 - [ ] Client: introduce protocols for projectile requests, deletions, and updates 
 - [x] Server: sends out deleted projectiles as well as current ones
-- [ ] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()... almost, but there are a few bugs
+- [x] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()

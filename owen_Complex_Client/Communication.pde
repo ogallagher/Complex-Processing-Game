@@ -1,7 +1,7 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();
-    println(text);
+    //println(text);
     
     String messageText = "";
     if (text.indexOf(messageHD) > -1) {
@@ -113,7 +113,7 @@ void readBlocks(String text) {
       block = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
     }
     
-    println("BLOCK.DATA: " + block);
+    //println("BLOCK.DATA: " + block);
     
     if (block.length() > 0) {
       int id = int(extractString(block,nameID,endID));
@@ -232,7 +232,7 @@ void requestData() {
   }
   else if (blocks.size() < blockMax) {
     broadcast(requestHD + nameID + "ENV" + endID + locationID + blocks.size() + endID + endHD);
-    println("REQUESTING");
+    //println("REQUESTING");
   }
   else {
     environmentStage = 1;

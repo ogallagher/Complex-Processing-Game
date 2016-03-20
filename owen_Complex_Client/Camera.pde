@@ -84,202 +84,187 @@ class Camera {
   }
   
   void control() {
-    //if (keyPressed) {
+    PVector heading = new PVector();
+    if (upDirection == 0 || upDirection == 2) {
+      heading.set(target.x,target.z);
+      heading.sub(location.x,location.z);
+    }
+    else if (upDirection == 1 || upDirection == 3) {
+      heading.set(target.y,target.z);
+      heading.sub(location.y,location.z);
+    }
+    else if (upDirection == 4 || upDirection == 5) {
+      heading.set(target.x,target.y);
+      heading.sub(location.x,location.y);
+    }
+    heading.normalize();
+    heading.mult(speed);
+    
+    if (keys[1]) {
+      float angle = heading.heading();
+      float magnitude = heading.mag();
       PVector movement = new PVector();
-      if (upDirection == 0 || upDirection == 2) {
-        movement.set(target.x,target.z);
-        movement.sub(location.x,location.z);
-      }
-      else if (upDirection == 1 || upDirection == 3) {
-        movement.set(target.y,target.z);
-        movement.sub(location.y,location.z);
-      }
-      else if (upDirection == 4 || upDirection == 5) {
-        movement.set(target.x,target.y);
-        movement.sub(location.x,location.y);
-      }
-      movement.normalize();
-      movement.mult(speed);
       
-      if (keys[1]) {
-        float angle = movement.heading();
-        float magnitude = movement.mag();
-        
-        if (upDirection == 0) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 1) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 2) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 3) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 4) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
-        else if (upDirection == 5) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
-      }
-      if (keys[3]) {
-        float angle = movement.heading();
-        float magnitude = movement.mag();
-        
-        if (upDirection == 0) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 1) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 2) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 3) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 4) {
-          angle -= 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
-        else if (upDirection == 5) {
-          angle += 0.5*PI;
-          movement = PVector.fromAngle(angle);
-          movement.mult(magnitude);
-          
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
-      }
-      if (keys[0]) {
-        if (upDirection == 0 || upDirection == 2) {
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 1 || upDirection == 3) {
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 4 || upDirection == 5) {
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
-      }
-      if (keys[2]) {
-        float angle = movement.heading();
-        float magnitude = movement.mag();
-        angle += PI;
+      if (upDirection == 0) {
+        angle -= 0.5*PI;
         movement = PVector.fromAngle(angle);
         movement.mult(magnitude);
         
-        if (upDirection == 0 || upDirection == 2) {
-          velocity.x += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 1 || upDirection == 3) {
-          velocity.y += movement.x;
-          velocity.z += movement.y;
-        }
-        else if (upDirection == 4 || upDirection == 5) {
-          velocity.x += movement.x;
-          velocity.y += movement.y;
-        }
+        velocity.x += movement.x;
+        velocity.z += movement.y;
       }
-      if (key == 'i') {
-        upDirection = 0;
+      else if (upDirection == 1) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.y += movement.x;
+        velocity.z += movement.y;
       }
-      if (key == 'l') {
-        upDirection = 1;
+      else if (upDirection == 2) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.z += movement.y;
       }
-      if (key == 'k') {
-        upDirection = 2;
+      else if (upDirection == 3) {
+        angle -= 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.y += movement.x;
+        velocity.z += movement.y;
       }
-      if (key == 'j') {
-        upDirection = 3;
+      else if (upDirection == 4) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.y += movement.y;
       }
-      if (key == 'u') {
-        upDirection = 4;
+      else if (upDirection == 5) {
+        angle -= 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.y += movement.y;
       }
-      if (key == 'o') {
-        upDirection = 5;
+    }
+    if (keys[3]) {
+      float angle = heading.heading();
+      float magnitude = heading.mag();
+      PVector movement = new PVector();
+      
+      if (upDirection == 0) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.z += movement.y;
       }
-      if (keys[5]) {
-        if (upDirection == 0 && touchingWall.hasValue(2)) {
-          velocity.y = -1 * speed * 10;
-        }
-        else if (upDirection == 1 && touchingWall.hasValue(1)) {
-          velocity.x = -1 * speed * 10;
-        }
-        else if (upDirection == 2 && touchingWall.hasValue(4)) {
-          velocity.y = speed * 10;
-        }
-        else if (upDirection == 3 && touchingWall.hasValue(3)) {
-          velocity.x = speed * 10;
-        }
-        else if (upDirection == 4 && touchingWall.hasValue(5)) {
-          velocity.z = -1 * speed * 10;
-        }
-        else if (upDirection == 5 && touchingWall.hasValue(6)) {
-          velocity.z = speed * 10;
-        }
+      else if (upDirection == 1) {
+        angle -= 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.y += movement.x;
+        velocity.z += movement.y;
       }
-    //}
+      else if (upDirection == 2) {
+        angle -= 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 3) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.y += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 4) {
+        angle -= 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.y += movement.y;
+      }
+      else if (upDirection == 5) {
+        angle += 0.5*PI;
+        movement = PVector.fromAngle(angle);
+        movement.mult(magnitude);
+        
+        velocity.x += movement.x;
+        velocity.y += movement.y;
+      }
+    }
+    if (keys[0]) {
+      PVector movement = new PVector(heading.x,heading.y);
+      
+      if (upDirection == 0 || upDirection == 2) {
+        velocity.x += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 1 || upDirection == 3) {
+        velocity.y += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 4 || upDirection == 5) {
+        velocity.x += movement.x;
+        velocity.y += movement.y;
+      }
+    }
+    if (keys[2]) {
+      float angle = heading.heading();
+      float magnitude = heading.mag();
+      PVector movement = new PVector();
+      angle += PI;
+      movement = PVector.fromAngle(angle);
+      movement.mult(magnitude);
+      
+      if (upDirection == 0 || upDirection == 2) {
+        velocity.x += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 1 || upDirection == 3) {
+        velocity.y += movement.x;
+        velocity.z += movement.y;
+      }
+      else if (upDirection == 4 || upDirection == 5) {
+        velocity.x += movement.x;
+        velocity.y += movement.y;
+      }
+    }
+    if (keys[5]) {
+      if (upDirection == 0 && touchingWall.hasValue(2)) {
+        velocity.y = -1 * speed * 10;
+      }
+      else if (upDirection == 1 && touchingWall.hasValue(1)) {
+        velocity.x = -1 * speed * 10;
+      }
+      else if (upDirection == 2 && touchingWall.hasValue(4)) {
+        velocity.y = speed * 10;
+      }
+      else if (upDirection == 3 && touchingWall.hasValue(3)) {
+        velocity.x = speed * 10;
+      }
+      else if (upDirection == 4 && touchingWall.hasValue(5)) {
+        velocity.z = -1 * speed * 10;
+      }
+      else if (upDirection == 5 && touchingWall.hasValue(6)) {
+        velocity.z = speed * 10;
+      }
+    }
   }
   
   void fall() {
