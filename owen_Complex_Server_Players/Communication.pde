@@ -1,10 +1,20 @@
 void listen() {
   if (client.available() > 0) {
-    String text = client.readString();  
-    String playerText = extractString(text,playerHD,endHD);
+    String text = client.readString();
     
-    analyzePlayers(playerText);
-    
+    String playerText = "";
+    if (text.indexOf(playerHD) > -1) {
+      if (text.indexOf(endHD, text.indexOf(playerHD)) > -1) {
+        playerText = extractString(text, playerHD, endHD);
+      }
+      else {
+        playerText = text.substring(text.indexOf(playerHD) + 1);
+      }
+    }
+    if (playerText.length() > 0) {
+      analyzePlayers(playerText);
+    }
+        
     sendPlayers();
   }
 }
@@ -23,30 +33,37 @@ void analyzePlayers(String text) {
       player = text.substring(text.indexOf(addressID,start),text.indexOf(addressID,end));
     }
     
-    String address = extractString(player,addressID,endID);
-    int listed = -1;
-    for (int i=0; i<players.size(); i++) {
-      if (listed == -1) {
-        String otherAddress = players.get(i).address;
-        if (address.equals(otherAddress)) {
-          listed = i;
+    if (player.length() > 0) {
+      String address = extractString(player,addressID,endID);
+      int listed = -1;
+      for (int i=0; i<players.size(); i++) {
+        if (listed == -1) {
+          String otherAddress = players.get(i).address;
+          if (address.equals(otherAddress)) {
+            listed = i;
+          }
         }
+      }
+      
+      if (listed > -1) {
+        int[] location = int(split(extractString(player,locationID,endID),','));
+        
+        players.get(listed).location = location;
+      }
+      else {
+        String name = extractString(player,nameID,endID);
+        int[] location = int(split(extractString(player,locationID,endID),','));
+        
+        players.add(new Player(address, name, location));
       }
     }
     
-    if (listed > -1) {
-      int[] location = int(split(extractString(player,locationID,endID),','));
-      
-      players.get(listed).location = location;
+    if (player.length() > 0) {
+      start = text.indexOf(addressID,start) + player.length();
     }
     else {
-      String name = extractString(player,nameID,endID);
-      int[] location = int(split(extractString(player,locationID,endID),','));
-      
-      players.add(new Player(address, name, location));
+      start = text.length() - 1;
     }
-    
-    start = text.indexOf(addressID,start) + player.length();
   }
 }
 

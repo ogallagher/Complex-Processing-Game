@@ -3,13 +3,31 @@ void listen() {
     String text = client.readString();
     
     if (environmentStage == 1) {
-      String projectileText = extractString(text,projectileHD,endHD);
+      String projectileText = "";
+      
+      if (text.indexOf(projectileHD) > -1) {
+        if (text.indexOf(endHD, text.indexOf(projectileHD)) > -1) {
+          projectileText = extractString(text, projectileHD, endHD);
+        }
+        else {
+          projectileText = text.substring(text.indexOf(projectileHD) + 1);
+        }
+      }
       if (projectileText.length() > 0) {
         analyzeProjectiles(projectileText);
       }
     }
     else {
-      String blockText = extractString(text,blockHD,endHD);
+      String blockText = "";
+      
+      if (text.indexOf(blockHD) > -1) {
+        if (text.indexOf(endHD, text.indexOf(blockHD)) > -1) {
+          blockText = extractString(text, blockHD, endHD);
+        }
+        else {
+          blockText = text.substring(text.indexOf(blockHD) + 1);
+        }
+      }
       if (blockText.length() > 0) {
         fillComplex(blockText);
       }
@@ -84,7 +102,7 @@ void analyzeProjectiles(String text) {
   
   while (text.indexOf(nameID,start) > -1) {
     int end = text.indexOf(nameID,start) + 1;
-    String projectile;
+    String projectile = "";
     
     if (text.indexOf(nameID,end) < 0) {
       projectile = text.substring(text.indexOf(nameID,start));
@@ -113,12 +131,19 @@ void analyzeProjectiles(String text) {
       if (description.equals("X")) {
         broadcast(projectileHD + nameID + name + endID + descriptionID + "X" + endID + timeID + str(clock) + endID + endHD);
       }
-      else {
+      else if (int(description) > -1) {
         int[] location = int(split(extractString(projectile,locationID,endID),','));
         int[] velocity = int(split(extractString(projectile,velocityID,endID),','));
         
         projectiles.add(new Projectile(location,velocity,name,int(description)));
       }
+    }
+    
+    if (projectile.length() > 0) {
+      start = text.indexOf(nameID,start) + projectile.length();
+    }
+    else {
+      start = text.length() - 1;
     }
   }
 }

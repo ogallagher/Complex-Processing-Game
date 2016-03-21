@@ -1,4 +1,4 @@
-void echo() {                                                      //NOTE: the central server will be getting multiple of each header, eventually. It then consolidates them before sending again.
+void echo() {                                                      //NOTE: the central server will be getting multiple of each header. It then consolidates them before sending again.
   Client client = server.available();
   if (client != null) {
     String text = client.readString();

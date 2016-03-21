@@ -72,3 +72,6 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [ ] Client: introduce protocols for projectile requests, deletions, and updates 
 - [x] Server: sends out deleted projectiles as well as current ones
 - [x] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()
+- [x] Server: have player server read corrupted incoming messages
+- [x] Server: have projectile server read corrupted incoming messages
+- [ ] Client: display projectiles

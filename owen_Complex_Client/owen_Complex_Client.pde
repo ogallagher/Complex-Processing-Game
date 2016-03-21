@@ -96,13 +96,13 @@ void draw() {
   }
   
   listen();
-  //println("PLAYERS.#: " + players.size());
   
   if (environmentStage > -1) {
     updateKeys();
     
     camera.orient();
     camera.look();
+    camera.shoot();  //EMPTY; NEEDS TO BE FILLED
     
     movePlayers();
     
@@ -114,6 +114,7 @@ void draw() {
     displayComplexAndCollision();
     displayGoal();
     displayPlayersAndCollision();
+    displayProjectilesAndCollision();
     
     en.endDraw();
     image(en,0,0);

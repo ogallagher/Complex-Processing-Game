@@ -1,7 +1,7 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();
-    //println(text);
+    println(text);
     
     String messageText = "";
     if (text.indexOf(messageHD) > -1) {
@@ -112,9 +112,7 @@ void readBlocks(String text) {
     else {
       block = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
     }
-    
-    //println("BLOCK.DATA: " + block);
-    
+        
     if (block.length() > 0) {
       int id = int(extractString(block,nameID,endID));
       if (id == blocks.size()) {
@@ -204,7 +202,54 @@ void readEnemies(String text) {
 }
 
 void readProjectiles(String text) {
+  int start = -1;
   
+  while(text.indexOf(nameID,start) > -1) {
+    int end = text.indexOf(nameID,start);
+    String projectile = "";
+    
+    if (text.indexOf(nameID,end) < 0) {
+      projectile = text.substring(text.indexOf(nameID,start));
+    }
+    else {
+      projectile = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
+    }
+    
+    String timeStamp = extractString(projectile,timeID,endID);
+    
+    if (timeStamp.length() > 0) {
+      String name = extractString(projectile,nameID,endID);
+      String description = extractString(projectile,descriptionID,endID);
+      
+      int listed = -1;
+      for (int i=0; i<projectiles.size() && listed == -1; i++) {
+        if (projectiles.get(i).name.equals(name)) {
+          listed = i;
+        }
+      }
+      
+      if (listed > -1) {
+        if (description.equals("X")) {
+          projectiles.remove(listed);
+        }
+        else {
+          int[] location = int(split(extractString(projectile,locationID,endID),','));
+          projectiles.get(listed).updateLocation(location);
+        }
+      }
+      else if (!description.equals("X")) {
+        int[] location = int(split(extractString(projectile,locationID,endID),','));
+        projectiles.add(new Projectile(location, name, int(description)));
+      }
+    }
+    
+    if (projectile.length() > 0) {
+      start = text.indexOf(nameID,start) + projectile.length();
+    }
+    else {
+      start = text.length() - 1;
+    }
+  }
 }
 
 void sendData() {
@@ -232,7 +277,6 @@ void requestData() {
   }
   else if (blocks.size() < blockMax) {
     broadcast(requestHD + nameID + "ENV" + endID + locationID + blocks.size() + endID + endHD);
-    //println("REQUESTING");
   }
   else {
     environmentStage = 1;

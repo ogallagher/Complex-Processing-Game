@@ -267,6 +267,10 @@ class Camera {
     }
   }
   
+  void shoot() {
+    
+  }
+  
   void fall() {
     PVector gravity = new PVector();
     float k = 1;
