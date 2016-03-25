@@ -31,7 +31,7 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [ ] Client: read in enemies
 - [ ] Server: create AI for enemies, so they move around obstacles
 - [ ] Client: ¿Sound effects... how much will this slow the game down, and is it worth the effort?
-- [ ] Client: aiming and shooting
+- [x] Client: aiming and shooting
 - [x] Test single client environment transfer
 - [x] Debug single client environment transfer
 - [x] Client: request environment
@@ -69,9 +69,13 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Client: Only read in other player data if time-stamp > that player's last time-stamp
 - [x] Test other players' updates w/ and w/o time-stamp condition above RESULT: doesn't make a very notable difference, especially with only 2 players at a time...
 - [x] Server: have projectile server load in a saved environment and check projectile-block collisions
-- [ ] Client: introduce protocols for projectile requests, deletions, and updates 
+- [x] Client: introduce protocols for projectile requests, deletions, and updates 
 - [x] Server: sends out deleted projectiles as well as current ones
 - [x] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()
 - [x] Server: have player server read corrupted incoming messages
 - [x] Server: have projectile server read corrupted incoming messages
 - [ ] Client: display projectiles
+- [ ] Client: detect collision with projectiles
+- [ ] Client: display collided projectiles
+- [ ] Client: try playing sounds for collided projectiles w/ location suggested by amplitude and Left-Right panoramic effect
+- [x] Fix conversion from long to string (get rid of scientific notation). Solution: place each value at positions n, convert round((time % (10^n)) / (10^(n-1))) to characters, and concatenate them into a string
