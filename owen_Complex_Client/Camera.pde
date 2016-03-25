@@ -3,7 +3,6 @@ class Camera {
   PVector velocity;
   PVector acceleration;
   PVector target;
-  PVector newTarget;
   PVector angularVelocity;
   PVector orientation;
   float speed;
@@ -17,7 +16,6 @@ class Camera {
     velocity = new PVector();
     acceleration = new PVector();
     target = new PVector(0,0,1);
-    newTarget = new PVector(0,0,1);
     angularVelocity = new PVector();
     orientation = new PVector(0,1,0);
     target.add(location);
@@ -268,7 +266,14 @@ class Camera {
   }
   
   void shoot() {
+    String nam = longToString(clock);
+    int speed = int(random(1,20));
+    int[] loc = {round(target.x),round(target.y),round(target.z)};
+    int[] vel = {round((target.x-location.x)*speed),round((target.y-location.y)*speed),round((target.z-location.z)*speed)};
+    projectiles.add(new Projectile(loc,vel,nam,0));
     
+    broadcast(projectileHD + nameID + nam + endID + descriptionID + str(0) + endID + locationID + str(loc[0]) + ',' + str(loc[1]) + ',' + str(loc[2]) + endID + velocityID + str(vel[0]) + ',' + str(vel[1]) + ',' + str(vel[2]) + endID + endHD);
+    println("SHOT FIRED");
   }
   
   void fall() {
@@ -519,5 +524,11 @@ class Camera {
     line(-10,0,10,0);
     rect(0,-10,0,20);
     popMatrix();
+  }
+}
+
+void mouseClicked() {
+  if (environmentStage > -1) {
+    camera.shoot();
   }
 }

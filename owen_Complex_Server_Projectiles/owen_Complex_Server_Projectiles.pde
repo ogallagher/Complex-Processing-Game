@@ -29,7 +29,7 @@ long clock = 0;
 ArrayList<Block> blocks = new ArrayList<Block>();
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 int speed = 1;
-int[] projectileRadius = {50,50};  //bullet size for each type {pushBack,gravitySwitch}
+int[] projectileRadius = {25,25};  //bullet size for each type {pushBack,gravitySwitch}
 
 int environmentStage = -1;
 int complexWidth = 5;    //cubicles

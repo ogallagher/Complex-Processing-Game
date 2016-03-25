@@ -1,17 +1,24 @@
 class Projectile {
-  int[] locations = {0,0,0,0,0,0};
+  int[] locations;
   int[] velocity;
   String name;         //When fired
   int description;     //Type of bullet
   
   Projectile(int[] loc, int[] vel, String nam, int des) {
+    locations = new int[6];
+    velocity = new int[3];
+    
     locations[0] = loc[0];
     locations[1] = loc[1];
     locations[2] = loc[2];
     locations[3] = loc[0];
     locations[4] = loc[1];
     locations[5] = loc[2];
-    velocity = vel;
+    
+    velocity[0] = vel[0];
+    velocity[1] = vel[1];
+    velocity[2] = vel[2];
+    
     name = nam;
     description = des;
   }
@@ -42,19 +49,19 @@ class Projectile {
       position.set(locations[0],locations[1],locations[2]);
     }
     else {
-      position.set(shot);
-      position.normalize();
-      position.mult(shot.mag()*cos(angle));
-      position.add(locations[0],locations[1],locations[2]);
+     position.set(shot);
+     position.normalize();
+     position.mult(shot.mag()*cos(angle));
+     position.add(locations[0],locations[1],locations[2]);
     }
     //..................................................................END
     
     //..................................................................CHECKING COLLISION
     boolean collision = false;
     
-    if ((position.x + radius) > (block.location.x - block.dimensions.x) && (position.x - radius) < (block.location.x + block.dimensions.x)) {
-      if ((position.y + radius) > (block.location.y - block.dimensions.y) && (position.y - radius) < (block.location.y + block.dimensions.y)) {
-        if ((position.z + radius) > (block.location.z - block.dimensions.z) && (position.z - radius) < (block.location.z + block.dimensions.z)) {
+    if ((position.x + radius) > (block.location.x - 0.5*block.dimensions.x) && (position.x - radius) < (block.location.x + 0.5*block.dimensions.x)) {
+      if ((position.y + radius) > (block.location.y - 0.5*block.dimensions.y) && (position.y - radius) < (block.location.y + 0.5*block.dimensions.y)) {
+        if ((position.z + radius) > (block.location.z - 0.5*block.dimensions.z) && (position.z - radius) < (block.location.z + 0.5*block.dimensions.z)) {
           collision = true;
         }
       } 
@@ -73,10 +80,13 @@ void moveProjectiles() {
 
 void collideProjectiles() {
   for (int i=0; i<projectiles.size(); i++) {
-    for (int j=0; j<blocks.size(); j++) {
+    boolean collided = false;
+    
+    for (int j=0; j<blocks.size() && !collided; j++) {
       if (projectiles.get(i).collision(blocks.get(j))) {
         String broadcast = projectileHD + nameID + projectiles.get(i).name + endID + descriptionID + "X" + endID + timeID + clock + endID + endHD;
-        
+        collided = true;
+        println("X");
         broadcast(broadcast);
       }
     }

@@ -41,3 +41,13 @@ void displayPlayersAndCollision() {
     }
   }
 }
+
+void displayProjectilesAndCollision() {
+  for (int i=0; i<projectiles.size(); i++) {
+    if (projectiles.get(i).description > -1 && projectiles.get(i).collisionWithCamera()) {
+      projectiles.get(i).description = -1;
+    }
+    
+    projectiles.get(i).display();
+  }
+}

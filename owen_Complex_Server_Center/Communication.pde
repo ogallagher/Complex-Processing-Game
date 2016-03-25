@@ -6,10 +6,20 @@ void echo() {                                                      //NOTE: the c
     String requestText = searchString(text,requestHD,endHD);
     String blockText = searchString(text,blockHD,endHD);
     String playerText = searchString(text,playerHD,endHD);
+    String projectileText = searchString(text,projectileHD,endHD);
     
-    broadcast(requestHD + requestText + endHD);
-    broadcast(blockHD + blockText + endHD);
-    broadcast(playerHD + playerText + endHD);
+    if (requestText.length() > 0) {
+      broadcast(requestHD + requestText + endHD);
+    }
+    if (blockText.length() > 0) {
+      broadcast(blockHD + blockText + endHD);
+    }
+    if (playerText.length() > 0) {
+      broadcast(playerHD + playerText + endHD);
+    }
+    if (projectileText.length() > 0) {
+      broadcast(projectileHD + projectileText + endHD);
+    }
   }
 }
 

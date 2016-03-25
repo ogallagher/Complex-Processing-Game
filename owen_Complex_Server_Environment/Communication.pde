@@ -1,9 +1,19 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();    
-    String requestText = extractString(text,requestHD,endHD);                //this will have to take multiple requested requests
     
-    analyzeRequests(requestText);
+    String requestText = "";
+    if (text.indexOf(requestHD) > -1) {
+      if (text.indexOf(endHD, text.indexOf(requestHD)) > -1) {
+        requestText = extractString(text, requestHD, endHD);
+      }
+      else {
+        requestText = text.substring(text.indexOf(requestHD) + 1);
+      }
+    }
+    if (requestText.length() > 0) {
+      analyzeRequests(requestText);
+    }    
   }
 }
 
@@ -34,6 +44,12 @@ void analyzeRequests(String text) {
 void sendEnvironment() {
   int requested = requests.get(0);
   requests.remove(0);
+  
+  for (int i=requests.size()-1; i>-1; i--) {
+    if (requests.get(i) == requested) {
+      requests.remove(i);
+    }
+  }
   
   if (requested == -1) {
     broadcast(blockHD + descriptionID + str(blockWidth) + ',' + str(cubicleWidth) + ',' + str(complexWidth) + ',' + str(environment.size()) + endID + endHD);

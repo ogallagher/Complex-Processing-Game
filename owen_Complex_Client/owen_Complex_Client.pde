@@ -99,10 +99,8 @@ void draw() {
   
   if (environmentStage > -1) {
     updateKeys();
-    
     camera.orient();
     camera.look();
-    camera.shoot();  //EMPTY; NEEDS TO BE FILLED
     
     movePlayers();
     
@@ -110,7 +108,6 @@ void draw() {
     en.background(0);
     
     camera.drawLamp();
-    
     displayComplexAndCollision();
     displayGoal();
     displayPlayersAndCollision();

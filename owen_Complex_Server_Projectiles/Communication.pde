@@ -124,18 +124,25 @@ void analyzeProjectiles(String text) {
     if (listed > -1) {
       if (description.equals("X")) {
         projectiles.remove(listed);
-        broadcast(projectileHD + nameID + name + endID + descriptionID + "X" + endID + timeID + str(clock) + endID + endHD);
+        broadcast(projectileHD + nameID + name + endID + descriptionID + "X" + endID + timeID + longToString(clock) + endID + endHD);
       }
     }
     else {
       if (description.equals("X")) {
-        broadcast(projectileHD + nameID + name + endID + descriptionID + "X" + endID + timeID + str(clock) + endID + endHD);
+        broadcast(projectileHD + nameID + name + endID + descriptionID + "X" + endID + timeID + longToString(clock) + endID + endHD);
       }
       else if (int(description) > -1) {
         int[] location = int(split(extractString(projectile,locationID,endID),','));
         int[] velocity = int(split(extractString(projectile,velocityID,endID),','));
         
-        projectiles.add(new Projectile(location,velocity,name,int(description)));
+        println("NAM: " + name);
+        println("LOC: " + extractString(projectile,locationID,endID));
+        println("VEL: " + extractString(projectile,velocityID,endID));
+        if (location.length == 3 && velocity.length == 3) {
+          println("ACCEPTED");
+          projectiles.add(new Projectile(location,velocity,name,int(description)));
+          println("PROJECTILES.NUM: " + projectiles.size());
+        }
       }
     }
     
@@ -153,10 +160,13 @@ void sendProjectiles() {
   
   for (int i=0; i<projectiles.size(); i++) {
     Projectile projectile = projectiles.get(i);
-    broadcast += nameID + projectile.name + endID + descriptionID + projectile.description + endID + locationID + projectile.locations[3] + ',' + projectile.locations[4] + ',' + projectile.locations[5] + endID + timeID + str(clock) + endID;
+    String time = longToString(clock);
+    broadcast += nameID + projectile.name + endID + descriptionID + projectile.description + endID + locationID + projectile.locations[3] + ',' + projectile.locations[4] + ',' + projectile.locations[5] + endID + timeID + time + endID;
   }
   
   broadcast += endHD;
+  
+  broadcast(broadcast);
 }
 
 void broadcast(String text) {

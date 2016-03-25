@@ -1,7 +1,6 @@
 void listen() {
   if (client.available() > 0) {
     String text = client.readString();
-    println(text);
     
     String messageText = "";
     if (text.indexOf(messageHD) > -1) {
@@ -205,7 +204,7 @@ void readProjectiles(String text) {
   int start = -1;
   
   while(text.indexOf(nameID,start) > -1) {
-    int end = text.indexOf(nameID,start);
+    int end = text.indexOf(nameID,start) + 1;
     String projectile = "";
     
     if (text.indexOf(nameID,end) < 0) {
@@ -213,13 +212,15 @@ void readProjectiles(String text) {
     }
     else {
       projectile = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
-    }
-    
+    }    
     String timeStamp = extractString(projectile,timeID,endID);
+    println("    timeStamp: " + timeStamp);
     
     if (timeStamp.length() > 0) {
       String name = extractString(projectile,nameID,endID);
+      println("    name: " + name);
       String description = extractString(projectile,descriptionID,endID);
+      println("    description: " + description);
       
       int listed = -1;
       for (int i=0; i<projectiles.size() && listed == -1; i++) {
@@ -227,19 +228,24 @@ void readProjectiles(String text) {
           listed = i;
         }
       }
+      println("    listed: " + listed);
       
       if (listed > -1) {
         if (description.equals("X")) {
           projectiles.remove(listed);
         }
-        else {
+        else if (toLong(timeStamp) > projectiles.get(listed).lastUpdate) {
           int[] location = int(split(extractString(projectile,locationID,endID),','));
           projectiles.get(listed).updateLocation(location);
+          projectiles.get(listed).lastUpdate = toLong(timeStamp);
+          projectiles.get(listed).verified = true;
         }
       }
       else if (!description.equals("X")) {
         int[] location = int(split(extractString(projectile,locationID,endID),','));
-        projectiles.add(new Projectile(location, name, int(description)));
+        int[] velocity = {0,0,0};
+        projectiles.add(new Projectile(location, velocity, name, int(description)));
+        projectiles.get(projectiles.size() - 1).verified = true;
       }
     }
     
@@ -266,8 +272,24 @@ void sendData() {
                          str(round(camera.location.z)) + 
                        endID + 
                      endHD;
-  
   broadcast(broadcast);
+    
+  if (projectiles.size() > 0) {
+    broadcast = projectileHD;
+    
+    for (int i=0; i<projectiles.size(); i++) {
+      if (!projectiles.get(i).verified) {
+        if (projectiles.get(i).description > -1) {
+          Projectile p = projectiles.get(i);
+          //println("  P[" + i + "]: " + p.verified);
+          broadcast += nameID + p.name + endID + descriptionID + str(p.description) + endID + locationID + str(p.locations[3]) + ',' + str(p.locations[4]) + ',' + str(p.locations[5]) + endID + velocityID + str(p.velocity[0]) + ',' + str(p.velocity[1]) + ',' + str(p.velocity[2]) + endID;
+        }
+      }
+    }
+    
+    broadcast += endHD;
+    broadcast(broadcast);
+  }
 }
 
 void requestData() {
@@ -285,7 +307,7 @@ void requestData() {
 
 void broadcast(String text) {
   if (text.length() > 0) {
-    client.write(addressID + myAddress + endID + text);
+    client.write(text);
   }
 }
 
