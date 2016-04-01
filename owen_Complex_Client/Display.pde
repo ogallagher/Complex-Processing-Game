@@ -44,10 +44,30 @@ void displayPlayersAndCollision() {
 
 void displayProjectilesAndCollision() {
   for (int i=0; i<projectiles.size(); i++) {
-    if (projectiles.get(i).description > -1 && projectiles.get(i).collisionWithCamera()) {
-      projectiles.get(i).description = -1;
-    }
-    
     projectiles.get(i).display();
+    
+    if (projectiles.get(i).description > -1) {
+      if (projectiles.get(i).collisionWithCamera()) {
+        projectiles.get(i).description = -1;
+        camera.location = camera.spawn();
+        camera.velocity.mult(0);
+        camera.acceleration.mult(0);
+        camera.target.set(0,0,1);
+        camera.target.add(camera.location);
+        camera.orientation.set(0,1,0);
+        camera.upDirection = 0;
+        println("RESPAWN");
+      }
+    }
+    else {
+      if (projectiles.get(i).description > -50) {
+        projectiles.get(i).description--;
+        //send delete message
+      }
+      else {
+        projectiles.remove(i);
+        i--;
+      }
+    }
   }
 }

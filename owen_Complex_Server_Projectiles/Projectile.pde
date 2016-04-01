@@ -83,11 +83,23 @@ void collideProjectiles() {
     boolean collided = false;
     
     for (int j=0; j<blocks.size() && !collided; j++) {
-      if (projectiles.get(i).collision(blocks.get(j))) {
-        String broadcast = projectileHD + nameID + projectiles.get(i).name + endID + descriptionID + "X" + endID + timeID + clock + endID + endHD;
-        collided = true;
-        println("X");
-        broadcast(broadcast);
+      if (projectiles.get(i).description > -1) {
+        if (projectiles.get(i).collision(blocks.get(j))) {
+          projectiles.get(i).description = -1;
+          collided = true;
+        }
+      }
+      else {
+        if (projectiles.get(i).description < -20) {
+          projectiles.remove(i);
+          i--;
+        }
+        else {
+          projectiles.get(i).description--;
+          String broadcast = projectileHD + nameID + projectiles.get(i).name + endID + descriptionID + "X" + endID + timeID + clock + endID + endHD;
+          broadcast(broadcast);
+          collided = true;
+        }
       }
     }
   }

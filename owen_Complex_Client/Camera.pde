@@ -10,9 +10,12 @@ class Camera {
   boolean orienting;
   int selfWidth;
   IntList touchingWall;
+  PVector shakeAngles;
+  int shakeCounter;
+  int shakeStart;
   
   Camera() {
-    location = new PVector(width/2, height/2, (-1*blockWidth*cubicleWidth*complexWidth*0.5) + (blockWidth*cubicleWidth*0.5));
+    location = spawn();
     velocity = new PVector();
     acceleration = new PVector();
     target = new PVector(0,0,1);
@@ -24,6 +27,14 @@ class Camera {
     orienting = false;
     selfWidth = blockWidth - 30;
     touchingWall = new IntList();
+    shakeAngles = new PVector(0,0);
+    shakeCounter = 0;
+    shakeStart = 0;
+  }
+  
+  PVector spawn() {
+    PVector spawn = new PVector(width/2, height/2, (-0.5*blockWidth*cubicleWidth*complexWidth) + (0.5*blockWidth*cubicleWidth));
+    return spawn;
   }
   
   void orient() {
@@ -267,13 +278,34 @@ class Camera {
   
   void shoot() {
     String nam = longToString(clock);
-    int speed = int(random(1,20));
-    int[] loc = {round(target.x),round(target.y),round(target.z)};
+    int speed = int(random(10,blockWidth/2));
+    
     int[] vel = {round((target.x-location.x)*speed),round((target.y-location.y)*speed),round((target.z-location.z)*speed)};
+    int[] loc = {round(location.x + (target.x-location.x)*selfWidth), round(location.y + (target.y-location.y)*selfWidth), round(location.z + (target.z-location.z)*selfWidth)};
+    
     projectiles.add(new Projectile(loc,vel,nam,0));
     
     broadcast(projectileHD + nameID + nam + endID + descriptionID + str(0) + endID + locationID + str(loc[0]) + ',' + str(loc[1]) + ',' + str(loc[2]) + endID + velocityID + str(vel[0]) + ',' + str(vel[1]) + ',' + str(vel[2]) + endID + endHD);
-    println("SHOT FIRED");
+  }
+  
+  void shake() {
+    if (shakeCounter == 0) {
+      for (int i=0; i<projectiles.size(); i++) {
+        if (projectiles.get(i).description == -1) {
+          shakeCounter = 1;
+          shakeStart = round(random(0,100));
+        }
+      }
+    }
+    else if (shakeCounter > 25) {
+      shakeCounter = 0;
+      shakeAngles.set(0,0);
+    }
+    else {
+      shakeCounter++;
+      shakeAngles.x = map(noise((shakeCounter+shakeStart)*0.1),0,1,-0.03*PI*(25-shakeCounter)/20,0.03*PI*(25-shakeCounter)/20);
+      shakeAngles.y = map(noise((shakeCounter+shakeStart+100)*0.1),0,1,-0.03*PI*(25-shakeCounter)/20,0.03*PI*(25-shakeCounter)/20);
+    }
   }
   
   void fall() {
@@ -485,6 +517,9 @@ class Camera {
       
       angleHorizontal += angularVelocity.x;
       angleVertical += angularVelocity.y;
+      
+      angleHorizontal += shakeAngles.x;
+      angleVertical += shakeAngles.y;
       
       angleVertical = constrain(angleVertical,0.1*PI,0.9*PI);
     }

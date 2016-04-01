@@ -30,7 +30,7 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Client: send self data (location, name, color)
 - [ ] Client: read in enemies
 - [ ] Server: create AI for enemies, so they move around obstacles
-- [ ] Client: ¿Sound effects... how much will this slow the game down, and is it worth the effort?
+- [x] Client: Sound effects... : I tested playing sound and panning the playback
 - [x] Client: aiming and shooting
 - [x] Test single client environment transfer
 - [x] Debug single client environment transfer

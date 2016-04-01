@@ -38,7 +38,9 @@ int blockWidth = 200;    //pixels
 int blockMax = 0;        //When to stop asking for more blocks
 
 ArrayList<Player> players = new ArrayList<Player>();
+
 ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+int[] projectileRadius = {25,25};  //bullet size for each type {pushBack,gravitySwitch}
 
 PGraphics en;
 
@@ -72,7 +74,9 @@ void setup() {
   camera = new Camera();
   override.mouseMove(int(displayWidth/2),int(displayHeight/2));
   
-  sounds = new SoundFile[0];
+  sounds = new SoundFile[1];
+  initializeSound();
+  
   keys = new boolean[6];    //W A S D E SPACE
   for (int i=0; i<keys.length; i++) {
     keys[i] = false;
@@ -97,8 +101,13 @@ void draw() {
   
   listen();
   
+  if (environmentStage < 1) {
+    playSounds();
+  }
+  
   if (environmentStage > -1) {
     updateKeys();
+    camera.shake();
     camera.orient();
     camera.look();
     

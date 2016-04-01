@@ -33,16 +33,56 @@ class Projectile {
   }
   
   boolean collisionWithCamera() {
-    return false;
+    int radius = projectileRadius[description];
+    
+    //..................................................................FINDING POSSIBLE PROJECTILE LOCATION
+    PVector shot = new PVector(locations[3],locations[4],locations[5]);
+    shot.sub(locations[0],locations[1],locations[2]);
+    
+    PVector terminal = new PVector(camera.location.x,camera.location.y,camera.location.z);
+    terminal.sub(locations[0],locations[1],locations[2]);
+    
+    float angle = PVector.angleBetween(shot,terminal);
+    PVector position = new PVector();
+    if (!(angle < PI*0.5)) {
+      position.set(locations[0],locations[1],locations[2]);
+    }
+    else {
+     position.set(shot);
+     position.normalize();
+     position.mult(shot.mag()*cos(angle));
+     position.add(locations[0],locations[1],locations[2]);
+    }
+    //..................................................................END
+    
+    //..................................................................CHECKING COLLISION
+    boolean collision = false;
+    
+    if ((position.x + radius) > (camera.location.x - 0.5*camera.selfWidth) && (position.x - radius) < (camera.location.x + 0.5*camera.selfWidth)) {
+      if ((position.y + radius) > (camera.location.y - 0.5*camera.selfWidth) && (position.y - radius) < (camera.location.y + 0.5*camera.selfWidth)) {
+        if ((position.z + radius) > (camera.location.z - 0.5*camera.selfWidth) && (position.z - radius) < (camera.location.z + 0.5*camera.selfWidth)) {
+          collision = true;
+        }
+      } 
+    }
+    //..................................................................END
+    
+    return collision;
   }
   
   void display() {
     en.pushMatrix();
-    en.fill(50,255,5);
+    if (description > -1) {
+      en.fill(50,255,5);
+    }
+    else {
+      en.fill(255,0,50);
+    }
     en.noStroke();
+    en.sphereDetail(5);
     for (int i=0; i<projectiles.size(); i++) {
       en.translate(projectiles.get(i).locations[3],projectiles.get(i).locations[4],projectiles.get(i).locations[5]);
-      en.sphere(50);
+      en.sphere(20);
       en.translate(-1*projectiles.get(i).locations[3],-1*projectiles.get(i).locations[4],-1*projectiles.get(i).locations[5]);
     }
     en.popMatrix();

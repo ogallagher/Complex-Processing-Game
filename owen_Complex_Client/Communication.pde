@@ -94,7 +94,7 @@ void readBlocks(String text) {
     blockMax = complex[3];
     environmentStage = 0;
     
-    println("BLOCK.MAX: " + blockMax);
+    println("BLOCK.DATA: " + blockWidth + ',' + cubicleWidth + ',' + complexWidth + ',' + blockMax);
     
     start = text.indexOf(endID,text.indexOf(descriptionID)) + 1;
   }
@@ -214,13 +214,10 @@ void readProjectiles(String text) {
       projectile = text.substring(text.indexOf(nameID,start),text.indexOf(nameID,end));
     }    
     String timeStamp = extractString(projectile,timeID,endID);
-    println("    timeStamp: " + timeStamp);
     
     if (timeStamp.length() > 0) {
       String name = extractString(projectile,nameID,endID);
-      println("    name: " + name);
       String description = extractString(projectile,descriptionID,endID);
-      println("    description: " + description);
       
       int listed = -1;
       for (int i=0; i<projectiles.size() && listed == -1; i++) {
@@ -228,13 +225,14 @@ void readProjectiles(String text) {
           listed = i;
         }
       }
-      println("    listed: " + listed);
       
       if (listed > -1) {
         if (description.equals("X")) {
-          projectiles.remove(listed);
+          if (projectiles.get(listed).description > -1) {
+            projectiles.get(listed).description = -1;
+          }
         }
-        else if (toLong(timeStamp) > projectiles.get(listed).lastUpdate) {
+        else if (projectiles.get(listed).description > -1 && toLong(timeStamp) > projectiles.get(listed).lastUpdate) {
           int[] location = int(split(extractString(projectile,locationID,endID),','));
           projectiles.get(listed).updateLocation(location);
           projectiles.get(listed).lastUpdate = toLong(timeStamp);
@@ -281,7 +279,6 @@ void sendData() {
       if (!projectiles.get(i).verified) {
         if (projectiles.get(i).description > -1) {
           Projectile p = projectiles.get(i);
-          //println("  P[" + i + "]: " + p.verified);
           broadcast += nameID + p.name + endID + descriptionID + str(p.description) + endID + locationID + str(p.locations[3]) + ',' + str(p.locations[4]) + ',' + str(p.locations[5]) + endID + velocityID + str(p.velocity[0]) + ',' + str(p.velocity[1]) + ',' + str(p.velocity[2]) + endID;
         }
       }

@@ -47,14 +47,16 @@ void analyzePlayers(String text) {
       
       if (listed > -1) {
         int[] location = int(split(extractString(player,locationID,endID),','));
-        
-        players.get(listed).location = location;
+        if (location.length == 3) {
+          players.get(listed).location = location;
+        }
       }
       else {
         String name = extractString(player,nameID,endID);
         int[] location = int(split(extractString(player,locationID,endID),','));
-        
-        players.add(new Player(address, name, location));
+        if (name.length() > 0 && location.length == 3) {
+          players.add(new Player(address, name, location));
+        }
       }
     }
     
@@ -75,7 +77,7 @@ void sendPlayers() {
     
     broadcast += nameID + player.name + endID;
     broadcast += locationID + str(player.location[0]) + ',' + str(player.location[1]) + ',' + str(player.location[2]) + endID;
-    broadcast += timeID + str(clock) + endID;
+    broadcast += timeID + longToString(clock) + endID;
   }
   
   broadcast += endHD;
