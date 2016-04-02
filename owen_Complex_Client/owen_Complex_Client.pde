@@ -74,7 +74,7 @@ void setup() {
   camera = new Camera();
   override.mouseMove(int(displayWidth/2),int(displayHeight/2));
   
-  sounds = new SoundFile[1];
+  sounds = new SoundFile[3];
   initializeSound();
   
   keys = new boolean[6];    //W A S D E SPACE
@@ -100,10 +100,6 @@ void draw() {
   }
   
   listen();
-  
-  if (environmentStage < 1) {
-    playSounds();
-  }
   
   if (environmentStage > -1) {
     updateKeys();

@@ -79,12 +79,73 @@ class Projectile {
       en.fill(255,0,50);
     }
     en.noStroke();
-    en.sphereDetail(5);
+    en.sphereDetail(8);
     for (int i=0; i<projectiles.size(); i++) {
       en.translate(projectiles.get(i).locations[3],projectiles.get(i).locations[4],projectiles.get(i).locations[5]);
       en.sphere(20);
       en.translate(-1*projectiles.get(i).locations[3],-1*projectiles.get(i).locations[4],-1*projectiles.get(i).locations[5]);
     }
     en.popMatrix();
+  }
+  
+  void sound() {
+    int id = round(random(1,2));         //sound selection
+    PVector aspects = new PVector(0,0);  //(amplitude, pan)
+    PVector difference = new PVector(locations[0],locations[1],locations[2]);
+    
+    difference.sub(camera.location);
+    
+    float mag = difference.mag();
+    mag = constrain(mag,1,blockWidth*cubicleWidth*1.5);
+    mag = map(mag,blockWidth*cubicleWidth*1.5,1,0,0.5);
+    aspects.x = mag;
+    
+    difference.normalize();
+    PVector heading = new PVector();
+    heading.set(camera.target);
+    heading.sub(camera.location);
+    heading.normalize();
+    
+    PVector initial = new PVector();
+    PVector terminal = new PVector();
+    
+    if (camera.upDirection == 0 || camera.upDirection == 2) {
+      initial.set(heading.x,heading.z);
+      initial = PVector.fromAngle(initial.heading() - (PI*0.5));
+      terminal.set(difference.x,difference.z);
+      
+      float angle = PVector.angleBetween(terminal,initial);
+      
+      aspects.y = cos(angle);
+      if (camera.upDirection == 0) {
+        aspects.y *= -1;
+      }
+    }
+    else if (camera.upDirection == 1 || camera.upDirection == 3) {
+      initial.set(heading.y,heading.z);
+      initial = PVector.fromAngle(initial.heading() - (PI*0.5));
+      terminal.set(difference.y,difference.z);
+      
+      float angle = PVector.angleBetween(terminal,initial);
+      
+      aspects.y = cos(angle);
+      if (camera.upDirection == 3) {
+        aspects.y *= -1;
+      }
+    }
+    else if (camera.upDirection == 4 || camera.upDirection == 5) {
+      initial.set(heading.x,heading.y);
+      initial = PVector.fromAngle(initial.heading() - (PI*0.5));
+      terminal.set(difference.x,difference.y);
+      
+      float angle = PVector.angleBetween(terminal,initial);
+      
+      aspects.y = cos(angle);
+      if (camera.upDirection == 5) {
+        aspects.y *= -1;
+      }
+    }
+    
+    playSound(id, aspects);
   }
 }

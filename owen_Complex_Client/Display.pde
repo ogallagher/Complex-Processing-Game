@@ -61,6 +61,10 @@ void displayProjectilesAndCollision() {
     }
     else {
       if (projectiles.get(i).description > -50) {
+        if (projectiles.get(i).description == -1) {
+          projectiles.get(i).sound();
+        }
+        
         projectiles.get(i).description--;
         //send delete message
       }

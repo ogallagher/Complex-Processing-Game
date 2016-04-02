@@ -77,5 +77,5 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [ ] Client: display projectiles
 - [ ] Client: detect collision with projectiles
 - [ ] Client: display collided projectiles
-- [ ] Client: try playing sounds for collided projectiles w/ location suggested by amplitude and Left-Right panoramic effect
+- [x] Client: try playing sounds for collided projectiles w/ location suggested by amplitude and Left-Right panoramic effect
 - [x] Fix conversion from long to string (get rid of scientific notation). Solution: place each value at positions n, convert round((time % (10^n)) / (10^(n-1))) to characters, and concatenate them into a string
