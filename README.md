@@ -22,7 +22,7 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Server: communication
 - [x] Server: players
 - [ ] Server: enemies
-- [ ] Server: projectiles
+- [x] Server: projectiles
 - [x] Client: read in environment
 - [x] Client: store environment
 - [ ] Client: update environment when far enough from last update point (add this if I ever want to make the complex larger)
@@ -63,7 +63,7 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Server: have the environment server keep a list of requested blockNumbers. Then send packets for each one at a time.
 - [x] Client: if end header is not visible, read everything to the end of the data string
 - [x] Debug blockNumber list and reading broken messages
-- [ ] Client: other players' movement is better (smoother), but still flickers. Problem is not so much gaps in movement any more. Solution: ??... for now, just examine the program to find the problem.
+- [ ] Client: other players' movement is better (smoother), but still jumps. Solution: ??... for now, just examine the program to find the problem.
 - [x] Introduce standardized time.
 - [x] Server: Put time stamps on sent player data
 - [x] Client: Only read in other player data if time-stamp > that player's last time-stamp
@@ -74,8 +74,13 @@ A soon-to-be 3D multiplayer game, written in Processing
 - [x] Client: incorporate multiple key-presses at once. Solution: have a boolean array of important keys, and update based both upon keyPressed() and keyReleased()
 - [x] Server: have player server read corrupted incoming messages
 - [x] Server: have projectile server read corrupted incoming messages
-- [ ] Client: display projectiles
-- [ ] Client: detect collision with projectiles
-- [ ] Client: display collided projectiles
+- [x] Client: display projectiles
+- [ ] Client: detect collision with projectiles and request their deletions
+- [x] Client: display collided projectiles
 - [x] Client: try playing sounds for collided projectiles w/ location suggested by amplitude and Left-Right panoramic effect
 - [x] Fix conversion from long to string (get rid of scientific notation). Solution: place each value at positions n, convert round((time % (10^n)) / (10^(n-1))) to characters, and concatenate them into a string
+- [ ] Server: projectile server moves projectiles, then checks for block collisions, then sends their new locations
+- [ ] Server: use above change to make projectiles move much faster
+- [ ] Client: only keep track of initial location and latest location of each projectile, tracking their paths of movement. Draw these paths of movement as fading streaks
+- [ ] ¿Client: add projectile flying sound in addition to impact sound?
+- [ ] Client: collision animation for projectiles
